@@ -1,0 +1,156 @@
+@import "tailwindcss";
+
+:root {
+  --background: #000000;
+  --foreground: #ffffff;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: "Noto Sans", Arial, Helvetica, sans-serif;
+}
+
+.font-zen-old-mincho {
+  font-family: "Zen Old Mincho", serif;
+}
+
+.font-noto-serif-jp {
+  font-family: "Noto Serif JP", serif;
+}
+
+.font-noto-sans {
+  font-family: "Noto Sans", sans-serif;
+}
+
+.news {
+  background: linear-gradient(180deg, #000 0%, #1a1a1a 100%);
+}
+
+.margin-auto {
+  margin: 0 auto;
+}
+
+.spotlight-container {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.spotlight {
+  position: absolute;
+  width: 300px;
+  height: 300px;
+  border-radius: 50%;
+  opacity: 0.3;
+  filter: blur(100px);
+}
+
+.spotlight-1 {
+  background: linear-gradient(45deg, #d4e157, #fff);
+  top: 10%;
+  left: 10%;
+  animation: float 20s infinite ease-in-out;
+}
+
+.spotlight-2 {
+  background: linear-gradient(45deg, #fff, #d4e157);
+  top: 60%;
+  right: 10%;
+  animation: float 25s infinite ease-in-out reverse;
+}
+
+.spotlight-3 {
+  background: linear-gradient(45deg, #d4e157, #fff);
+  bottom: 10%;
+  left: 50%;
+  animation: float 30s infinite ease-in-out;
+}
+
+.spotlight-4 {
+  background: linear-gradient(45deg, #fff, #d4e157);
+  top: 30%;
+  right: 30%;
+  animation: float 22s infinite ease-in-out reverse;
+}
+
+.spotlight-5 {
+  background: linear-gradient(45deg, #d4e157, #fff);
+  bottom: 30%;
+  left: 20%;
+  animation: float 28s infinite ease-in-out;
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+  33% {
+    transform: translate(30px, -30px) scale(1.1);
+  }
+  66% {
+    transform: translate(-20px, 20px) scale(0.9);
+  }
+}
+
+/* Swiper Custom Styles */
+.swiper-button-prev-service,
+.swiper-button-next-service {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 44px;
+  height: 44px;
+  z-index: 10;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #D4E157;
+}
+
+.swiper-button-prev-service {
+  left: 10px;
+}
+
+.swiper-button-next-service {
+  right: 10px;
+}
+
+.swiper-button-prev-service::after,
+.swiper-button-next-service::after {
+  font-family: swiper-icons;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.swiper-button-prev-service::after {
+  content: 'prev';
+}
+
+.swiper-button-next-service::after {
+  content: 'next';
+}
+
+.swiper-pagination-service {
+  text-align: center;
+  transition: 0.3s opacity;
+}
+
+.swiper-pagination-service .swiper-pagination-bullet {
+  background: #D4E157;
+  opacity: 0.5;
+}
+
+.swiper-pagination-service .swiper-pagination-bullet-active {
+  opacity: 1;
+}
