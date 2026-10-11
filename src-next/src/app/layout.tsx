@@ -1,11 +1,15 @@
 import type { Metadata } from "next";
 import Script from "next/script";
 import GtmPageView from "@/components/GtmPageView";
+import { SITE_URL } from "@/lib/site";
 import "./globals.css";
 
 const GTM_ID = "GTM-KDJLQXS8";
 
+// canonical は各ページの metadata.alternates.canonical で設定する。
+// layout に置くと、設定し忘れた子ページがすべてトップを canonical にしてしまうため、ここには書かない。
 export const metadata: Metadata = {
+  metadataBase: new URL(SITE_URL),
   title: "株式会社SC - 宮城県名取市のエネルギーを与える会社",
   description: "株式会社SCは宮城県名取市に本社を構え、エネルギー、農業、住宅の3つを主力事業とし、持続可能な未来に向けて暮らしを根底から支えるサービスを提供しています。",
   keywords: "エネルギー, 農業, 住宅, 宮城県, 名取市",
@@ -13,7 +17,6 @@ export const metadata: Metadata = {
   openGraph: {
     title: "株式会社SC - エネルギーを与える会社",
     description: "株式会社SCは宮城県名取市に本社を構え、エネルギー、農業、住宅の3つを主力事業とし、持続可能な未来に向けて暮らしを根底から支えるサービスを提供しています。",
-    url: "https://sc-14.net",
     siteName: "株式会社SC",
     type: "website",
   },

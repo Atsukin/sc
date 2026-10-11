@@ -16,10 +16,10 @@ export default function ServiceSection() {
     document.head.appendChild(link);
 
     script.onload = () => {
-      // @ts-ignore
-      if (typeof window !== "undefined" && window.Swiper) {
-        // @ts-ignore
-        new window.Swiper(".serviceSwiper", {
+      // CDN から読み込んだ Swiper をグローバルから取り出す
+      const SwiperCtor = (window as unknown as { Swiper?: new (selector: string, options: unknown) => unknown }).Swiper;
+      if (SwiperCtor) {
+        new SwiperCtor(".serviceSwiper", {
           slidesPerView: 1,
           spaceBetween: 30,
           loop: true,
@@ -62,19 +62,19 @@ export default function ServiceSection() {
       title: "エネルギー事業",
       description: "太陽光発電システムと蓄電池の提案・販売",
       image: "/images/service_slide01.jpg",
-      link: "/service",
+      link: "/solar/",
     },
     {
       title: "農業",
       description: "安全で美味しい食材の生産と供給",
       image: "/images/service_slide02.webp",
-      link: "/service",
+      link: "/service/",
     },
     {
       title: "住宅",
       description: "新築住宅の提案とリフォーム・リノベーション",
       image: "/images/service_slide03.webp",
-      link: "/service",
+      link: "/service/",
     },
   ];
 

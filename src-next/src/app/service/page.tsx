@@ -1,6 +1,12 @@
+import type { Metadata } from 'next';
 import Image from 'next/image';
+import Link from 'next/link';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+
+export const metadata: Metadata = {
+  alternates: { canonical: '/service/' },
+};
 
 const services = [
   {
@@ -9,6 +15,10 @@ const services = [
     image: '/images/service01_img_new.jpg',
     description:
       '電気を買う時代は終わり自分で作る時代といえます。「太陽光発電システム」の導入はもはや特別なことではありません。また、各地で起こる災害への備えとしても「蓄電池システム」は欠かせません。高騰する電気代の削減、売電価格が下落した太陽光発電システムの有効活用。「太陽光発電システム」「蓄電池システム」で環境への配慮を叫ぶのではありません。家計にエネルギーを与えるべく、どうかご検討をされてください。',
+    links: [
+      { href: '/solar/', label: '太陽光発電・蓄電池について詳しく見る' },
+      { href: '/solar/natori/', label: '名取市で太陽光・蓄電池をご検討の方へ（補助金情報）' },
+    ],
   },
   {
     id: 'agriculture',
@@ -58,6 +68,17 @@ export default function ServicePage() {
                 <div className="md:w-3/5 p-8">
                   <h3 className="text-2xl font-bold text-yellow-500 mb-4">{service.title}</h3>
                   <p className="text-gray-600 mb-4">{service.description}</p>
+                  {service.links && (
+                    <ul className="space-y-2">
+                      {service.links.map((link) => (
+                        <li key={link.href}>
+                          <Link href={link.href} className="font-bold text-yellow-600 underline hover:text-yellow-500">
+                            {link.label} →
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
                 </div>
               </div>
             </div>

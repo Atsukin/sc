@@ -160,10 +160,10 @@ export default function NewsSection() {
     document.head.appendChild(link)
 
     script.onload = () => {
-      // @ts-ignore
-      if (typeof window !== 'undefined' && window.Swiper) {
-        // @ts-ignore
-        new window.Swiper('.mySwiper', {
+      // CDN から読み込んだ Swiper をグローバルから取り出す
+      const SwiperCtor = (window as unknown as { Swiper?: new (selector: string, options: unknown) => unknown }).Swiper
+      if (SwiperCtor) {
+        new SwiperCtor('.mySwiper', {
           slidesPerView: 1,
           spaceBetween: 30,
           loop: true,

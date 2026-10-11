@@ -1,5 +1,4 @@
-'use client'
-
+import type { Metadata } from 'next'
 import Header from '@/components/Header'
 import HeroSection from '@/components/HeroSection'
 import InfoSection from '@/components/InfoSection'
@@ -7,6 +6,10 @@ import AboutSection from '@/components/AboutSection'
 import ServiceSection from '@/components/ServiceSection'
 import NewsSection from '@/components/NewsSection'
 import Footer from '@/components/Footer'
+
+export const metadata: Metadata = {
+  alternates: { canonical: '/' },
+}
 
 export default function HomePage() {
   return (

@@ -1,6 +1,11 @@
+import type { Metadata } from 'next';
 import Link from 'next/link';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+
+export const metadata: Metadata = {
+  alternates: { canonical: '/flow/' },
+};
 
 const steps = [
   {
@@ -60,7 +65,7 @@ export default function FlowPage() {
               <h2 className="text-3xl font-bold mb-4 mt-8 text-gray-800">{step.title}</h2>
               <p className="text-gray-600 mb-4">{step.description}</p>
               {step.hasLink && (
-                <Link href="/contact">
+                <Link href="/contact/">
                   <span className="inline-block bg-yellow-400 text-white px-6 py-2 rounded-full hover:bg-yellow-500 transition duration-300">
                     お問い合わせはこちら
                   </span>

@@ -34,22 +34,22 @@ export default function Header({ variant = 'dark' }: HeaderProps) {
                 HOME
               </span>
             </Link>
-            <Link href="/service">
+            <Link href="/service/">
               <span className={`hover:text-[#D4E157] transition duration-300 text-lg font-medium cursor-pointer ${textColor}`}>
                 SERVICE
               </span>
             </Link>
-            <Link href="/greeting">
+            <Link href="/greeting/">
               <span className={`hover:text-[#D4E157] transition duration-300 text-lg font-medium cursor-pointer ${textColor}`}>
                 GREETING
               </span>
             </Link>
-            <Link href="/company">
+            <Link href="/company/">
               <span className={`hover:text-[#D4E157] transition duration-300 text-lg font-medium cursor-pointer ${textColor}`}>
                 COMPANY
               </span>
             </Link>
-            <Link href="/contact">
+            <Link href="/contact/">
               <span className={`hover:text-[#D4E157] transition duration-300 text-lg font-medium cursor-pointer ${textColor}`}>
                 CONTACT
               </span>
@@ -116,22 +116,22 @@ export default function Header({ variant = 'dark' }: HeaderProps) {
                   HOME
                 </span>
               </Link>
-              <Link href="/service">
+              <Link href="/service/">
                 <span className="hover:text-[#D4E157] transition duration-300 text-lg font-medium cursor-pointer text-white">
                   SERVICE
                 </span>
               </Link>
-              <Link href="/greeting">
+              <Link href="/greeting/">
                 <span className="hover:text-[#D4E157] transition duration-300 text-lg font-medium cursor-pointer text-white">
                   GREETING
                 </span>
               </Link>
-              <Link href="/company">
+              <Link href="/company/">
                 <span className="hover:text-[#D4E157] transition duration-300 text-lg font-medium cursor-pointer text-white">
                   COMPANY
                 </span>
               </Link>
-              <Link href="/contact">
+              <Link href="/contact/">
                 <span className="hover:text-[#D4E157] transition duration-300 text-lg font-medium cursor-pointer text-white">
                   CONTACT
                 </span>

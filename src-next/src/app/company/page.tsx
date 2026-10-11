@@ -1,5 +1,10 @@
+import type { Metadata } from 'next';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+
+export const metadata: Metadata = {
+  alternates: { canonical: '/company/' },
+};
 
 const companyInfo = [
   { label: '本社', value: '株式会社SC' },
