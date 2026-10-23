@@ -13,6 +13,8 @@ tools: Read, Grep, Glob, Write, Edit, Bash, WebSearch, WebFetch
 - モバイルファーストで作る。ファーストビューの画像は `priority` を付け、LCP を意識する
 
 ## ビジュアル
+- デザインの作業では、必ず先に `.claude/skills/frontend-design/SKILL.md` を読み、その手順（計画 → 既定パターンとの照合 → 実装 → スクリーンショットで批評）に従う
+- 色・書体・レイアウトは `docs/design/` のデザイン計画を正とする。新しいページで計画がない場合は、先に計画を作ってから実装する
 - 文字だけのセクションを続けない。各セクションに写真・アイコン・図解のどれかを入れる
 - フリー素材は商用利用可・クレジット不要のもの（Unsplash / Pexels など）を使う。保存先は `src-next/public/images/solar/`。出典 URL とライセンスを `docs/assets/image-credits.md` に記録する
 - フリー素材を自社の施工事例のように見せない（キャプションや alt で「施工事例」「当社施工」と書かない）
