@@ -8,29 +8,20 @@ type Props = {
   /** フォームボタンの文言。「無料」は社内確認が取れるまで使わない（TODO(要確認) 相談・現地調査・見積もりが無料か） */
   formText?: string;
   showHours?: boolean;
-  /** dark: 写真や濃い背景の上に置くとき */
-  tone?: 'light' | 'dark';
 };
 
-export const telButtonClass =
-  'flex min-h-14 w-full items-center justify-center gap-2 rounded-full bg-gray-900 px-6 py-3 text-lg font-bold text-white shadow-md transition hover:bg-gray-700 sm:w-auto';
-export const telButtonOnDarkClass =
-  'flex min-h-14 w-full items-center justify-center gap-2 rounded-full bg-white px-6 py-3 text-lg font-bold text-gray-900 shadow-md transition hover:bg-gray-100 sm:w-auto';
-export const formButtonClass =
-  'flex min-h-14 w-full items-center justify-center rounded-full bg-[#D4E157] px-6 py-3 text-lg font-bold text-gray-900 shadow-md transition hover:bg-[#c0cc45] sm:w-auto';
+// ボタンだけ 4px の角丸。電話は Ink の面、フォームは Lemon の面（どちらも文字とのコントラストを確保）
+const buttonBase =
+  'inline-flex min-h-14 w-full items-center justify-center gap-2 rounded-button px-6 py-3 text-lg font-bold sm:w-auto';
+export const telButtonClass = `${buttonBase} bg-ink text-white hover:bg-body`;
+export const formButtonClass = `${buttonBase} bg-lemon text-ink hover:bg-lemon-pale`;
 
 /** 電話とフォームの CTA を横並び（スマホでは縦積み）で置く */
-export default function CtaButtons({
-  ctaLocation,
-  formText = 'フォームで相談する',
-  showHours = true,
-  tone = 'light',
-}: Props) {
-  const isDark = tone === 'dark';
+export default function CtaButtons({ ctaLocation, formText = 'フォームで相談する', showHours = true }: Props) {
   return (
     <div>
       <div className="flex flex-col gap-3 sm:flex-row">
-        <TelLink ctaLocation={ctaLocation} className={isDark ? telButtonOnDarkClass : telButtonClass}>
+        <TelLink ctaLocation={ctaLocation} className={telButtonClass}>
           <PhoneIcon />
           <span>
             <span className="sr-only">電話する </span>
@@ -39,9 +30,7 @@ export default function CtaButtons({
         </TelLink>
         <ContactPageLink ctaLocation={ctaLocation} text={formText} className={formButtonClass} />
       </div>
-      {showHours && (
-        <p className={`mt-2 text-sm ${isDark ? 'text-white/80' : 'text-gray-600'}`}>電話受付 {COMPANY.hours}</p>
-      )}
+      {showHours && <p className="mt-3 text-[15px] text-body">電話の受付は {COMPANY.hours}</p>}
     </div>
   );
 }

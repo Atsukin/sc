@@ -1,48 +1,36 @@
-import { CalendarClock, CalendarDays } from 'lucide-react';
+import { formatJaDate } from './format';
 
 export type KeyDate = {
   label: string;
   /** YYYY-MM-DD */
   date: string;
   note?: string;
-  /** 一番大事な期限。濃い色で強調する */
+  /** 一番大事な期限。Lemon Pale の行で示す */
   emphasis?: boolean;
 };
 
-type Props = { dates: KeyDate[] };
+type Props = { dates: KeyDate[]; caption: string };
 
-/** 期限を大きな日付で見せるカード */
-export default function KeyDates({ dates }: Props) {
+/** 期限の一覧を罫線の表で出す（大きな数字の帯にはしない。期限の強調は DeadlineStripe だけ） */
+export default function KeyDates({ dates, caption }: Props) {
   return (
-    <div className={`grid gap-4 ${dates.length >= 2 ? 'md:grid-cols-2' : ''}`}>
-      {dates.map((d) => {
-        const [y, m, day] = d.date.split('-').map(Number);
-        const Icon = d.emphasis ? CalendarClock : CalendarDays;
-        return (
-          <div
-            key={d.label}
-            className={`flex items-center gap-5 rounded-2xl p-5 md:p-6 ${
-              d.emphasis ? 'bg-gray-900 text-white shadow-lg ring-4 ring-amber-400' : 'bg-white text-gray-900 shadow-sm ring-1 ring-gray-200'
-            }`}
-          >
-            <Icon aria-hidden="true" className={`h-10 w-10 flex-none ${d.emphasis ? 'text-amber-400' : 'text-[#7f8a1f]'}`} />
-            <div>
-              <p className={`text-sm font-bold ${d.emphasis ? 'text-white/85' : 'text-gray-600'}`}>{d.label}</p>
-              <p className="mt-1 flex items-baseline gap-2">
-                <time dateTime={d.date} className="flex items-baseline gap-2">
-                  <span className="text-base font-bold">{y}年</span>
-                  <span
-                    className={`font-zen-old-mincho text-5xl font-bold leading-none md:text-6xl ${d.emphasis ? 'text-amber-400' : 'text-gray-900'}`}
-                  >
-                    {m}/{day}
-                  </span>
-                </time>
-              </p>
-              {d.note && <p className={`mt-2 text-xs leading-relaxed ${d.emphasis ? 'text-white/75' : 'text-gray-500'}`}>{d.note}</p>}
-            </div>
-          </div>
-        );
-      })}
-    </div>
+    <table className="w-full max-w-4xl border-collapse border-t-[3px] border-b border-ink text-left">
+      <caption className="pb-3 text-left font-bold text-ink">{caption}</caption>
+      <tbody>
+        {dates.map((d) => (
+          <tr key={d.label} className={`border-b border-body/30 last:border-b-0 ${d.emphasis ? 'bg-lemon-pale' : ''}`}>
+            <th scope="row" className={`py-4 pr-4 align-top font-normal md:w-1/2 ${d.emphasis ? 'pl-3' : ''}`}>
+              {d.label}
+            </th>
+            <td className="py-4 align-top">
+              <time dateTime={d.date} className="font-mincho text-[22px] font-bold leading-tight text-ink">
+                {formatJaDate(d.date)}
+              </time>
+              {d.note && <p className="mt-1 text-[15px] leading-relaxed">{d.note}</p>}
+            </td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
   );
 }

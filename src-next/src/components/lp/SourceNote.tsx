@@ -1,4 +1,3 @@
-import { ChevronDown, Info } from 'lucide-react';
 import { formatJaDate } from './format';
 import type { Source } from './types';
 
@@ -6,39 +5,32 @@ type Props = {
   sources: Source[];
   /** 確認日（YYYY-MM-DD） */
   checkedAt: string;
-  /** dark: 濃い背景の節に置くとき */
-  tone?: 'light' | 'dark';
 };
 
 /**
  * 出典と確認日。補助金など変わりうる情報には必ず付ける。
- * 本文より目立たないよう、確認日だけを小さく出し、出典のリンクは開閉式にしている。
+ * 公的な通知の書き方にならい、出典を隠さずに小さな文字で並べる。リンクは情報の色（Cell Blue）。
  */
-export default function SourceNote({ sources, checkedAt, tone = 'light' }: Props) {
-  const isDark = tone === 'dark';
+export default function SourceNote({ sources, checkedAt }: Props) {
   return (
-    <details className={`group text-xs leading-relaxed ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>
-      <summary
-        className={`inline-flex cursor-pointer list-none items-center gap-1 [&::-webkit-details-marker]:hidden ${isDark ? 'hover:text-gray-200' : 'hover:text-gray-800'}`}
-      >
-        <Info aria-hidden="true" className="h-3.5 w-3.5" />
+    <div className="max-w-copy text-sm leading-relaxed text-body">
+      <p>
         出典（<time dateTime={checkedAt}>{formatJaDate(checkedAt)}</time> 確認）
-        <ChevronDown aria-hidden="true" className="h-3.5 w-3.5 transition group-open:rotate-180" />
-      </summary>
-      <ul className="mt-2 list-disc space-y-1 pl-5">
+      </p>
+      <ul className="mt-1 space-y-1">
         {sources.map((source) => (
           <li key={source.url}>
             <a
               href={source.url}
               target="_blank"
               rel="noopener noreferrer"
-              className={`break-all underline underline-offset-2 ${isDark ? 'hover:text-white' : 'hover:text-gray-900'}`}
+              className="text-cell underline underline-offset-4 [overflow-wrap:anywhere] hover:decoration-2"
             >
               {source.label}
             </a>
           </li>
         ))}
       </ul>
-    </details>
+    </div>
   );
 }

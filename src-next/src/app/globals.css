@@ -10,6 +10,60 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+
+  /* ロゴから取った色（docs/design/solar-natori-design-plan.md）。これ以外の色は /solar/ で使わない */
+  --color-lemon: #f2e42b;
+  --color-lemon-pale: #f8ef8c;
+  --color-ink: #000000;
+  --color-body: #33312c;
+  --color-cell: #1d4b8f;
+  --color-sky: #e8f0f6;
+
+  /* 書体。変数は src/app/solar/layout.tsx の next/font で定義する */
+  --font-mincho: var(--font-zen-old-mincho), "Zen Old Mincho", serif;
+  --font-gothic: var(--font-noto-sans-jp), "Noto Sans JP", sans-serif;
+
+  /* 本文（年配の読み手を想定して 17px・行間 1.9）と、1行 40 字の本文幅 */
+  --text-prose: 1.0625rem;
+  --text-prose--line-height: 1.9;
+  --container-copy: 42.5rem;
+
+  --radius-button: 4px;
+}
+
+/* ---- /solar/ 配下（src/app/solar/layout.tsx の .solar-page） ---- */
+
+/* ロゴの 45° を、期限の帯の黄と黒のストライプに使う */
+@utility stripe-caution {
+  background-image: repeating-linear-gradient(
+    -45deg,
+    var(--color-ink) 0 14px,
+    var(--color-lemon) 14px 28px
+  );
+}
+
+/* ファーストビューの写真の切り取り。左辺に 45° のくぼみ（--notch は高さの半分にすると 45° になる） */
+@utility clip-chevron {
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%, var(--notch, 0px) 50%);
+}
+
+.solar-page :focus-visible {
+  outline: 3px solid var(--color-cell);
+  outline-offset: 3px;
+}
+
+.solar-page .on-ink :focus-visible {
+  outline-color: var(--color-lemon);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .solar-page *,
+  .solar-page *::before,
+  .solar-page *::after {
+    transition-duration: 0s !important;
+    animation: none !important;
+    scroll-behavior: auto !important;
+  }
 }
 
 body {

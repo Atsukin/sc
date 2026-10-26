@@ -10,19 +10,19 @@ type Props = { formText?: string };
  */
 export default function FixedCtaBar({ formText = 'フォームで相談' }: Props) {
   return (
-    <div className="fixed inset-x-0 bottom-0 z-40 border-t border-gray-200 bg-white/95 p-2 shadow-[0_-4px_12px_rgba(0,0,0,0.08)] backdrop-blur md:hidden">
+    <div className="fixed inset-x-0 bottom-0 z-40 border-t border-ink bg-white p-2 md:hidden">
       <div className="grid grid-cols-2 gap-2">
         <TelLink
           ctaLocation="fixed_footer"
-          className="flex min-h-12 items-center justify-center gap-1 rounded-full bg-gray-900 text-base font-bold text-white"
+          className="flex min-h-12 items-center justify-center gap-1.5 rounded-button bg-ink text-base font-bold text-white"
         >
           <PhoneIcon />
-          電話で相談
+          電話する
         </TelLink>
         <ContactPageLink
           ctaLocation="fixed_footer"
           text={formText}
-          className="flex min-h-12 items-center justify-center rounded-full bg-[#D4E157] text-base font-bold text-gray-900"
+          className="flex min-h-12 items-center justify-center rounded-button bg-lemon text-base font-bold text-ink"
         />
       </div>
     </div>

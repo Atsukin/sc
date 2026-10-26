@@ -1,17 +1,5 @@
 // /solar/natori/ の地域固有データ。構成の正は docs/seo/page-solar-natori.md。
 // 制度情報は毎月1日に見直し、CHECKED_AT を更新する（§6）。
-import {
-  Banknote,
-  ClipboardCheck,
-  FileText,
-  Handshake,
-  MessageCircle,
-  PlugZap,
-  Search,
-  Send,
-  Wrench,
-  Zap,
-} from 'lucide-react';
 import type {
   BreadcrumbItem,
   Condition,
@@ -155,17 +143,17 @@ export const NATIONAL_SOURCES: Source[] = [
 ];
 
 export const SCHEDULE: FlowStep[] = [
-  { title: 'ご相談', icon: MessageCircle },
-  { title: '現地調査', icon: Search },
-  { title: 'お見積もり・ご契約', icon: FileText },
-  { title: '電力会社への連系申請', icon: PlugZap },
-  { title: '工事', icon: Wrench },
-  { title: '電力受給開始', icon: Zap, highlight: '2026年12月31日までに' },
-  { title: '市へ申請', description: '〜2027年2月1日', icon: Send },
-  { title: '補助金の入金', description: '交付決定から1〜2週間が目安（市の手引きによる）', icon: Banknote },
+  { title: 'ご相談' },
+  { title: '現地調査' },
+  { title: 'お見積もり・ご契約' },
+  { title: '電力会社への連系申請' },
+  { title: '工事' },
+  { title: '電力受給開始', highlight: '2026年12月31日までに' },
+  { title: '市へ申請', description: '〜2027年2月1日' },
+  { title: '補助金の入金', description: '交付決定から1〜2週間が目安（市の手引きによる）' },
 ];
 
-/** 期限のカード（§3-3）。DEADLINE_NOTICE.until を過ぎたら出さない */
+/** 期限の表（§3-3）。DEADLINE_NOTICE.until を過ぎたら出さない */
 export const KEY_DATES = [
   {
     label: '設置の完了（太陽光は電力受給開始）',
@@ -196,31 +184,28 @@ export const WORKS: WorkCase[] = [];
 // ---- 流れ（§3-11） -----------------------------------------------------------
 
 export const FLOW: FlowStep[] = [
-  { title: 'お問い合わせ', description: 'お電話またはフォームからご連絡ください。', icon: MessageCircle },
+  { title: 'お問い合わせ', description: 'お電話またはフォームからご連絡ください。' },
   {
     title: '現地調査',
-    icon: Search,
     description:
       '屋根の状態や日当たり、分電盤を確認します。沿岸部では塩害の条件を、あわせてハザードマップでご自宅の想定も確認します。',
   },
-  { title: 'お見積もり・ご提案', description: '補助金を使えるかどうかの確認も含めてご説明します。', icon: FileText },
-  { title: 'ご契約', icon: Handshake },
+  { title: 'お見積もり・ご提案', description: '補助金を使えるかどうかの確認も含めてご説明します。' },
+  { title: 'ご契約' },
   {
     title: '電力会社への申請・経済産業省の設備認定',
     description: '太陽光発電を電力会社の送配電網につなぐための手続きです。',
-    icon: PlugZap,
   },
   // TODO(要確認) 工事の日数（社内の実績）。確認できるまで日数は書かない（§4 TODO 7）
-  { title: '工事', icon: Wrench },
-  { title: '電力受給開始', icon: Zap, description: '電力会社から電力受給契約確認書が届きます。名取市の補助金の申請に必要です。' },
+  { title: '工事' },
+  { title: '電力受給開始', description: '電力会社から電力受給契約確認書が届きます。名取市の補助金の申請に必要です。' },
   {
     title: '名取市・宮城県への補助金の申請',
-    icon: Send,
     // TODO(要確認) 申請の代行・書類作成の支援をどこまでしているか（§4 TODO 1）。確認できるまでは「ご相談ください」にとどめる
     description: '申請はご契約者さまの名義で行います。申請に必要な書類についてもご相談ください。',
   },
   // TODO(要確認) 定期点検などのアフターサービスの内容（§4 TODO 19）
-  { title: 'アフターサービス', description: '設置後の気になる点やアフターのご相談にも対応します。', icon: ClipboardCheck },
+  { title: 'アフターサービス', description: '設置後の気になる点やアフターのご相談にも対応します。' },
 ];
 
 // ---- FAQ（§3-12）。表示と JSON-LD の両方にこの文を使う -------------------------
@@ -267,19 +252,13 @@ export const FAQS: Faq[] = [
 ];
 
 // ---- 写真（§ビジュアル）。フリー素材の出典は docs/assets/image-credits.md --------------
+// デザイン計画（docs/design/solar-natori-design-plan.md）により、写真はファーストビュー・設置のポイント・停電の3か所だけに使う。
+// ほかの写真（panels-blue-sky など）のファイルと出典の記録は残している
 // フリー素材は「イメージ」として使う。alt やキャプションで施工事例・当社施工と書かないこと
 
 export const IMAGES = {
   // TODO(要確認) 名取市内の施工写真に差し替える（§4 TODO 4）。現在は既存サイトの /images/service01_img.jpg を WebP にしたもの
   hero: { src: '/images/solar/roof-panels.webp', alt: '住宅の屋根に設置された太陽光パネル' },
-  sunny: { src: '/images/solar/panels-blue-sky.webp', alt: '青空の下の太陽光パネル（イメージ）' },
   coast: { src: '/images/solar/coast-town.webp', alt: '海沿いの住宅地（イメージ）' },
-  roof: { src: '/images/solar/japanese-roof.webp', alt: '日本の住宅の瓦屋根（イメージ）' },
   blackout: { src: '/images/solar/blackout-candle.webp', alt: '停電した部屋でろうそくを灯したテーブル（イメージ）' },
-  battery: { src: '/images/solar/battery-system.webp', alt: '壁に取り付けられた蓄電池とパワーコンディショナ（イメージ）' },
-  bill: { src: '/images/solar/calculator.webp', alt: '電卓で家計を計算する手元（イメージ）' },
-  consultation: { src: '/images/solar/consultation.webp', alt: '書類を見ながら相談する二人（イメージ）' },
-  family: { src: '/images/solar/family-cherry-blossom.webp', alt: '桜の下で過ごす家族（イメージ）' },
-  work: { src: '/images/solar/panel-work.webp', alt: '太陽光パネルの取り付け作業（イメージ）' },
-  town: { src: '/images/solar/town-sunrise.webp', alt: '朝日に照らされる住宅街（イメージ）' },
 } satisfies Record<string, ImageAsset>;

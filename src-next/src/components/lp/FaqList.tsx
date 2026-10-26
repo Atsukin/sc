@@ -1,27 +1,27 @@
-import { ChevronDown } from 'lucide-react';
 import type { Faq } from './types';
 
 type Props = { faqs: Faq[] };
 
-/** 開閉式の FAQ。JSON-LD（structuredData.ts の faqNode）には同じ配列を渡し、文を一致させる */
+/**
+ * 開閉式の FAQ。JSON-LD（structuredData.ts の faqNode）には同じ配列を渡し、文を一致させる。
+ * 動きは、開閉の印（＋が回って×になる）だけ。prefers-reduced-motion では globals.css で止める。
+ */
 export default function FaqList({ faqs }: Props) {
   return (
-    <div className="space-y-3">
+    <div className="max-w-copy border-t border-ink">
       {faqs.map((faq) => (
-        <details key={faq.question} className="group overflow-hidden rounded-2xl bg-white shadow-sm ring-1 ring-gray-200 open:ring-[#D4E157]">
-          <summary className="flex cursor-pointer list-none items-start gap-3 p-4 font-bold text-gray-900 md:p-5 [&::-webkit-details-marker]:hidden">
-            <span aria-hidden="true" className="flex h-8 w-8 flex-none items-center justify-center rounded-full bg-[#D4E157] text-sm font-black text-gray-900">
-              Q
-            </span>
-            <span className="flex-1 pt-1 leading-snug">{faq.question}</span>
-            <ChevronDown aria-hidden="true" className="mt-1.5 h-5 w-5 flex-none text-gray-400 transition group-open:rotate-180" />
+        <details key={faq.question} className="group border-b border-body/30">
+          <summary className="flex cursor-pointer list-none items-start gap-4 py-5 font-bold leading-snug text-ink [&::-webkit-details-marker]:hidden">
+            <span className="flex-1">{faq.question}</span>
+            <svg
+              aria-hidden="true"
+              viewBox="0 0 20 20"
+              className="mt-0.5 h-5 w-5 flex-none stroke-ink transition-transform duration-200 group-open:rotate-45"
+            >
+              <path d="M10 3v14M3 10h14" strokeWidth="2" />
+            </svg>
           </summary>
-          <div className="flex gap-3 border-t border-gray-100 bg-stone-50/60 p-4 text-gray-700 md:p-5">
-            <span aria-hidden="true" className="flex h-8 w-8 flex-none items-center justify-center rounded-full bg-gray-900 text-sm font-black text-white">
-              A
-            </span>
-            <p className="flex-1 pt-1 leading-relaxed">{faq.answer}</p>
-          </div>
+          <p className="pb-6">{faq.answer}</p>
         </details>
       ))}
     </div>

@@ -13,18 +13,18 @@ type Props = {
 export default function WorksSection({ title, works, minCount = 3 }: Props) {
   if (works.length < minCount) return null;
   return (
-    <LpSection id="works" title={title} tone="gray">
-      <ul className="grid gap-4 md:grid-cols-3">
+    <LpSection id="works" title={title} tone="sky">
+      <ul className="grid gap-8 md:grid-cols-3">
         {works.map((work) => (
-          <li key={`${work.district}-${work.house}`} className="overflow-hidden rounded-xl bg-white shadow-sm ring-1 ring-gray-200">
+          <li key={`${work.district}-${work.house}`} className="border-t border-ink pt-4">
             {work.image && (
-              <div className="relative aspect-[4/3]">
+              <div className="relative mb-4 aspect-[4/3]">
                 <Image src={work.image.src} alt={work.image.alt} fill sizes="(min-width: 768px) 33vw, 100vw" className="object-cover" />
               </div>
             )}
-            <dl className="space-y-1 p-4 text-sm">
+            <dl className="space-y-1 text-base">
               <dt className="sr-only">地区</dt>
-              <dd className="text-base font-bold text-gray-900">{work.district}</dd>
+              <dd className="font-bold text-ink">{work.district}</dd>
               <dt className="sr-only">住宅</dt>
               <dd>{work.house}</dd>
               {work.solar && (<><dt className="font-bold">太陽光</dt><dd>{work.solar}</dd></>)}
