@@ -1,6 +1,17 @@
 import type { NextConfig } from "next";
 
-const nextConfig: NextConfig = {
+// Xserver 向けの静的書き出し（npm run build:xserver）。Vercel 移行が済んだら消す。
+// redirects と API ルートは静的書き出しでは使えないので外し、問い合わせは旧 PHP（/api/contact.php）に送る。
+const isStaticExport = process.env.STATIC_EXPORT === "1";
+
+const staticExportConfig: NextConfig = {
+  output: "export",
+  trailingSlash: true,
+  images: { unoptimized: true },
+  env: { NEXT_PUBLIC_CONTACT_ENDPOINT: "/api/contact.php" },
+};
+
+const nextConfig: NextConfig = isStaticExport ? staticExportConfig : {
   // 既存 URL（末尾スラッシュ付き）を維持する。docs/migration-seo.md 参照
   trailingSlash: true,
   async redirects() {

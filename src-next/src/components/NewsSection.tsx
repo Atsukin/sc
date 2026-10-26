@@ -16,6 +16,18 @@ interface NewsItem {
 export default function NewsSection() {
   const newsItems: NewsItem[] = [
     {
+      id: 12,
+      date: '2026.10.23',
+      title: '石垣島での珊瑚の植え付け',
+      description: 'この度、沖縄県石垣島に弊社の珊瑚の植え付けが完了しました。油そば専門店「はてな沖縄本店」では売上げの一部を珊瑚再生活動のサポートに充てています。今後も素晴らしい未来に向けて頑張ります。',
+      images: [
+        '/images/1023/coral_news_002.jpg',
+        '/images/1023/coral_news_001.jpg',
+        '/images/1023/coral_news_003.jpg',
+        '/images/1023/coral_news_004.jpg'
+      ]
+    },
+    {
       id: 11,
       date: '2026.08.21',
       title: '少年少女サッカー大会 in Jヴィレッジ',
@@ -25,8 +37,7 @@ export default function NewsSection() {
         '/images/0821/soccer_news_002.jpg',
         '/images/0821/soccer_news_003.jpg',
         '/images/0821/soccer_news_004.jpg',
-        '/images/0821/soccer_news_005.jpg',
-        '/images/0821/soccer_news_006.jpg'
+        '/images/0821/soccer_news_005.jpg'
       ]
     },
     {

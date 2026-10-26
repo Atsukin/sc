@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "build:xserver": "node scripts/build-xserver.mjs",
     "start": "next start",
     "lint": "eslint"
   },

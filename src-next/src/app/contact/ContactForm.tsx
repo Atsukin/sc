@@ -7,6 +7,8 @@ import { pushToDataLayer } from '@/lib/gtm';
 // Cloudflare Turnstile。サイトキーが設定されているときだけウィジェットを出す。
 // サーバー側は TURNSTILE_SECRET_KEY があるときだけ検証するので、両方を同時に設定すること。
 const TURNSTILE_SITE_KEY = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY;
+// Xserver 向けの静的書き出しでは旧 PHP（/api/contact.php）に送る。next.config.ts 参照
+const CONTACT_ENDPOINT = process.env.NEXT_PUBLIC_CONTACT_ENDPOINT ?? '/api/contact/';
 
 type TurnstileApi = {
   render: (
@@ -61,7 +63,7 @@ export default function ContactForm() {
     setErrorMessage('');
 
     try {
-      const response = await fetch('/api/contact/', {
+      const response = await fetch(CONTACT_ENDPOINT, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
