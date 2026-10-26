@@ -14,6 +14,8 @@ const staticExportConfig: NextConfig = {
 const nextConfig: NextConfig = isStaticExport ? staticExportConfig : {
   // 既存 URL（末尾スラッシュ付き）を維持する。docs/migration-seo.md 参照
   trailingSlash: true,
+  // 同じ LAN のスマホから dev サーバーで確認できるようにする（next dev のときだけ効く）
+  allowedDevOrigins: ["10.*.*.*", "192.168.*.*", "*.local"],
   async redirects() {
     // www → apex に正規化する（重複コンテンツの解消）。
     // permanent: true だと 308 になるため、明示的に 301 を返す。
