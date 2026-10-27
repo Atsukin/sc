@@ -5,7 +5,7 @@
 // - ファーストビューの写真を外部 URL から public/images/solar/ に移して next/image で表示
 // - 電話リンクに tel_click、/contact/ へのリンクに cta_click の計測を付与（docs/analytics/tracking-plan.md）
 // - 最後の「フォームで相談する」を仮の mailto（info@example.com）から /contact/ に変更
-// - ロゴのリンクをページ先頭（#）からトップページ（/）に変更
+// - ロゴのリンクをページ先頭（#）からトップページ（/）に変更し、仮ロゴ（丸に SC）を正式ロゴに差し替え
 
 import { useState, type ReactNode } from 'react';
 import Image from 'next/image';
@@ -50,8 +50,7 @@ export default function NatoriLp({ fontClassName }: { fontClassName: string }) {
       <header className="header">
         <div className="topbar">名取市の太陽光発電・蓄電池は、地元の株式会社SCへ</div>
         <div className="nav shell">
-          {/* TODO(要確認) ロゴは Figma 版の仮デザイン（オレンジと青の丸に SC）。正式ロゴ（/images/SC_logo.png）にするか確認する */}
-          <Link className="logo" href="/"><span className="logo-mark">SC</span><span>株式会社SC<small>SOLAR &amp; STORAGE</small></span></Link>
+          <Link className="logo" href="/"><Image className="logo-img" src="/images/solar/sc-logo.png" alt="株式会社SC" width={480} height={206} preload /><span>株式会社SC<small>SOLAR &amp; STORAGE</small></span></Link>
           <nav><a href="#subsidy">補助金</a><a href="#features">選ばれる理由</a><a href="#flow">導入の流れ</a><a href="#faq">よくある質問</a></nav>
           {/* TODO(要確認) 相談・現地調査が無料か（docs/seo/page-solar-natori.md §4 TODO 3） */}
           <a className="nav-phone" href={COMPANY.telHref} onClick={() => telClick('header')}><small>相談無料</small>022-354-8345</a>
@@ -81,6 +80,7 @@ export default function NatoriLp({ fontClassName }: { fontClassName: string }) {
           <div className="shell deadline-inner">
             <div className="deadline-date"><span>設置期限</span><strong>2026.12.31</strong></div>
             <div><h2>令和8年度の補助金、今から間に合うかお早めにご相談ください</h2><p>太陽光は電力受給開始まで完了したものが対象です。工事・電力会社の手続き期間を見込む必要があります。</p></div>
+            {/* TODO(要確認) 「無料」（§4 TODO 3） */}
             <a href="#contact">無料で確認する →</a>
           </div>
         </section>
@@ -140,6 +140,7 @@ export default function NatoriLp({ fontClassName }: { fontClassName: string }) {
         </section>
 
         <section className="cta-strip">
+          {/* TODO(要確認) 「専門スタッフ」と言える体制か（§4 TODO 15） */}
           <div className="shell"><div><small>補助金の対象？ 今から間に合う？</small><h2>まずは名取市の専門スタッフへご相談ください</h2></div><PhoneButton light ctaLocation="middle" /><FormButton /></div>
         </section>
 
@@ -197,6 +198,7 @@ export default function NatoriLp({ fontClassName }: { fontClassName: string }) {
 
         <section className="contact section" id="contact">
           <div className="shell contact-box">
+            {/* TODO(要確認) 「FREE」「無料」（§4 TODO 3）と「専門スタッフ」（§4 TODO 15） */}
             <p className="eyebrow">FREE CONSULTATION</p>
             <h2>名取市の太陽光発電・蓄電池<br />まずは無料でご相談ください</h2>
             <p>補助金を使えるか、期限に間に合うか、見積もりは妥当か。地域の専門スタッフがお答えします。</p>
@@ -215,7 +217,7 @@ export default function NatoriLp({ fontClassName }: { fontClassName: string }) {
         </section>
       </main>
 
-      <footer><div className="shell"><div className="logo footer-logo"><span className="logo-mark">SC</span><span>株式会社SC<small>SOLAR &amp; STORAGE</small></span></div><p>〒981-1231 宮城県名取市手倉田字諏訪357-2</p><p>© 2025 株式会社SC All Rights Reserved.</p></div></footer>
+      <footer><div className="shell"><div className="logo footer-logo"><Image className="logo-img" src="/images/solar/sc-logo-white.png" alt="" width={480} height={207} /><span>株式会社SC<small>SOLAR &amp; STORAGE</small></span></div><p>〒981-1231 宮城県名取市手倉田字諏訪357-2</p><p>© 2025 株式会社SC All Rights Reserved.</p></div></footer>
       <div className="mobile-bar"><a href={COMPANY.telHref} onClick={() => telClick('fixed_footer')}>電話で相談</a><a href="#contact">フォーム相談</a></div>
     </div>
   )

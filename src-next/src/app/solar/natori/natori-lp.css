@@ -27,7 +27,8 @@ html:has(.nlp) { scroll-behavior: smooth; }
 .nlp .nav { height: 82px; display: flex; align-items: center; gap: 48px; }
 .nlp .logo { display: flex; align-items: center; gap: 10px; color: var(--color-navy); font-size: 18px; font-weight: 800; line-height: 1.1; }
 .nlp .logo small { display: block; font: 700 9px/1.2 var(--nlp-cond); letter-spacing: .16em; color: #75909f; margin-top: 4px; }
-.nlp .logo-mark { width: 48px; height: 48px; display: grid; place-items: center; border-radius: 50%; color: #fff; background: linear-gradient(135deg, var(--color-orange) 0 48%, var(--color-sky) 49%); font: 700 19px var(--nlp-cond); }
+/* 正式ロゴ（元データの仮ロゴ .logo-mark を置き換え） */
+.nlp .logo-img { width: auto; height: 44px; }
 .nlp nav { display: flex; gap: 28px; margin-left: auto; }
 .nlp nav a { color: var(--color-navy); font-size: 13px; font-weight: 700; }
 .nlp .nav-phone { color: var(--color-orange); font: 700 22px var(--nlp-cond); border-left: 1px solid #dbe2e6; padding-left: 24px; }
@@ -173,7 +174,7 @@ html:has(.nlp) { scroll-behavior: smooth; }
   .nlp .topbar { font-size: 10px; }
   .nlp .nav { height: 66px; }
   .nlp nav, .nlp .nav-phone { display: none; }
-  .nlp .logo-mark { width: 40px; height: 40px; }
+  .nlp .logo-img { height: 36px; }
   /* 元は height: 650px 固定で、下端の数字の帯がボタンに重なっていたため、高さを中身に合わせる（移植時の修正） */
   .nlp .hero { height: auto; min-height: 650px; padding-bottom: 96px; }
   .nlp .hero > img { object-position: 62% center; }
