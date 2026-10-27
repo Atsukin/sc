@@ -19,6 +19,7 @@
 | `family-cherry-blossom.webp` | 名取: 途中の CTA の背景 / ハブ: 末尾の CTA の背景 | https://unsplash.com/photos/family-with-bicycles-under-cherry-blossoms-S7yIoG8VaxU | Yanhao Fang（@alamanga） | Unsplash License |
 | `panel-work.webp` | 流れ（名取・ハブ、PC のみ） | https://unsplash.com/photos/a-person-working-on-a-solar-panel-rNn_TU8dvoY | Markus Spiske（@markusspiske） | Unsplash License |
 | `town-sunrise.webp` | 選ばれる理由の背景（名取・ハブ） | https://unsplash.com/photos/the-sun-is-setting-over-a-small-town-ZOv6BjhQSp0 | Nichika Sakurai（@nichiyoshi） | Unsplash License |
+| `natori-lp-hero.webp` | 名取LP（Figma Make 版）のファーストビュー | https://images.unsplash.com/photo-1689770256234-ddfd315e3b2b（Figma Make の元データが参照していた URL） | 未確認（Unsplash の写真ページで要確認） | Unsplash License（`images.unsplash.com/photo-` の配信。Unsplash+ は `plus.unsplash.com/premium_photo-` で配信される） |
 
 ## メモ
 - `battery-system.webp` には海外メーカーのロゴが写っている。扱うメーカーが決まったら（§4 TODO 14）、その機器の写真に差し替えるのが望ましい
