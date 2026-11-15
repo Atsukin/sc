@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>F案 エネルギーフロー｜名取LP</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  /* 写真に頼らず、電気の流れ（昼・夜・停電）を図で見せる案。押すと流れが切り替わる */
+  :root {
+    --ink: #040000;
+    --panel: #121010;
+    --yellow: #F5E528;
+    --white: #FFFFFF;
+    --mist: rgba(255,255,255,.66);
+    --dim: rgba(255,255,255,.16);
+    --rule: rgba(255,255,255,.14);
+  }
+  * { box-sizing: border-box; margin: 0; }
+  body { background: var(--ink); color: var(--white); font-family: "Noto Sans JP", sans-serif; -webkit-font-smoothing: antialiased; letter-spacing: .03em; }
+  a, button { color: inherit; text-decoration: none; font: inherit; }
+  :is(a, button):focus-visible { outline: 2px solid var(--yellow); outline-offset: 4px; }
+  .wrap { width: min(1240px, 100% - 32px); margin-inline: auto; }
+
+  header .wrap { display: flex; align-items: center; gap: 40px; height: 88px; border-bottom: 1px solid var(--rule); }
+  header img { height: 30px; }
+  header nav { display: flex; gap: 36px; margin-left: auto; font-size: 14px; color: var(--mist); }
+  .tel { font-size: 18px; font-weight: 700; }
+
+  .fv .wrap { display: grid; grid-template-columns: 5fr 7fr; gap: 56px; align-items: center; min-height: calc(100svh - 88px); padding: 48px 0; }
+  .fv h1 { font-size: 14px; font-weight: 500; color: var(--mist); letter-spacing: .08em; }
+  .lead { font-size: clamp(38px, 4.4vw, 64px); font-weight: 700; line-height: 1.3; margin-top: 24px; font-feature-settings: "palt"; word-break: auto-phrase; }
+  .body { font-size: 15px; line-height: 2; color: var(--mist); margin-top: 28px; max-width: 30em; }
+  .actions { display: flex; align-items: center; gap: 28px; margin-top: 44px; flex-wrap: wrap; }
+  .btn { background: var(--yellow); color: var(--ink); font-size: 16px; font-weight: 700; padding: 20px 36px; transition: background .2s; }
+  .btn:hover { background: #fff36a; }
+  .phone { font-size: 15px; border-bottom: 1px solid currentColor; padding-bottom: 4px; }
+
+  /* ---- 図 ---- */
+  .flow { background: var(--panel); border: 1px solid var(--rule); padding: 28px 28px 24px; }
+  .modes { display: flex; border: 1px solid var(--rule); width: fit-content; }
+  .modes button { background: none; border: 0; padding: 10px 26px; font-size: 14px; font-weight: 500; color: var(--mist); cursor: pointer; transition: background .2s, color .2s; }
+  .modes button + button { border-left: 1px solid var(--rule); }
+  .modes button[aria-pressed="true"] { background: var(--white); color: var(--ink); font-weight: 700; }
+  .flow svg { display: block; width: 100%; height: auto; margin-top: 12px; }
+  .flow .caption { font-size: 15px; line-height: 1.9; min-height: 3.8em; border-top: 1px solid var(--rule); padding-top: 16px; margin-top: 8px; }
+
+  .line { fill: none; stroke: var(--dim); stroke-width: 2; transition: stroke .3s; }
+  .line.on { stroke: var(--yellow); stroke-dasharray: 6 10; }
+  @media (prefers-reduced-motion: no-preference) {
+    .line.on { animation: run 1s linear infinite; }
+    @keyframes run { to { stroke-dashoffset: -16; } }
+  }
+  .obj { fill: none; stroke: var(--white); stroke-width: 1.5; }
+  .label { fill: var(--mist); font-size: 13px; font-family: "Noto Sans JP", sans-serif; }
+  .sun { fill: var(--yellow); transition: opacity .3s; }
+  .cut { stroke: var(--white); stroke-width: 2; opacity: 0; transition: opacity .3s; }
+  .flow[data-mode="night"] .sun { opacity: .12; }
+  .flow[data-mode="outage"] .cut { opacity: 1; }
+  .flow[data-mode="outage"] .f-grid { stroke-dasharray: 2 6; }
+  .battery-level { fill: var(--yellow); transition: height .6s, y .6s; }
+
+  /* ---- 補助金 ---- */
+  .subsidy { border-top: 1px solid var(--rule); }
+  .subsidy .wrap { display: grid; grid-template-columns: 4fr 8fr; gap: 56px; padding: 120px 0; }
+  .subsidy h2 { font-size: clamp(26px, 2.6vw, 34px); font-weight: 700; line-height: 1.5; font-feature-settings: "palt"; word-break: auto-phrase; }
+  .subsidy p { color: var(--mist); font-size: 15px; line-height: 2; margin-top: 16px; }
+  .figures { display: grid; grid-template-columns: repeat(3, 1fr); border-top: 1px solid var(--rule); }
+  .figures div { padding: 28px 24px 0 0; }
+  .figures dd { font-size: clamp(40px, 4.4vw, 64px); font-weight: 700; color: var(--yellow); line-height: 1; font-feature-settings: "palt"; }
+  .figures dd small { font-size: 18px; margin-left: 4px; }
+  .figures dt { font-size: 13px; color: var(--mist); margin-top: 14px; }
+
+  @media (max-width: 900px) {
+    header .wrap { height: 64px; gap: 16px; }
+    header img { height: 26px; }
+    header nav { display: none; }
+    .tel { margin-left: auto; font-size: 16px; }
+    .fv .wrap { grid-template-columns: 1fr; gap: 32px; min-height: 0; padding: 32px 0 56px; }
+    .lead { font-size: 34px; margin-top: 14px; }
+    .actions { margin-top: 28px; gap: 20px; }
+    .btn { width: 100%; text-align: center; }
+    .flow { padding: 16px; }
+    .modes { width: 100%; }
+    .modes button { flex: 1; padding: 10px 0; }
+    .subsidy .wrap { grid-template-columns: 1fr; gap: 32px; padding: 80px 0; }
+    .figures { grid-template-columns: 1fr; }
+    .figures div { display: flex; justify-content: space-between; align-items: baseline; padding: 18px 0; border-bottom: 1px solid var(--rule); }
+    .figures dt { margin: 0; order: -1; }
+    .figures dd { font-size: 36px; }
+  }
+</style>
+</head>
+<body>
+<header><div class="wrap">
+  <img src="../../../../src-next/public/images/solar/sc-logo-white.png" alt="株式会社SC">
+  <nav><a href="#subsidy">補助金</a><a href="#">導入の流れ</a><a href="#">よくある質問</a></nav>
+  <a class="tel" href="tel:0223548345">022-354-8345</a>
+</div></header>
+
+<section class="fv">
+  <div class="wrap">
+    <div>
+      <h1>名取市の太陽光発電・蓄電池</h1>
+      <p class="lead">昼につくって、<br>夜に使う。<br>停電しても、止まらない。</p>
+      <p class="body">太陽光でつくった電気を蓄電池にためておけば、夜も停電のときも家で使えます。名取市の補助金は、この組み合わせ（太陽光と蓄電池の同時設置）が対象です。</p>
+      <div class="actions">
+        <a class="btn" href="#">補助金の対象か相談する</a>
+        <a class="phone" href="tel:0223548345">電話で相談 022-354-8345</a>
+      </div>
+    </div>
+
+    <figure class="flow" data-mode="day">
+      <div class="modes" role="group" aria-label="電気の流れを切り替える">
+        <button type="button" data-mode="day" aria-pressed="true">昼</button>
+        <button type="button" data-mode="night" aria-pressed="false">夜</button>
+        <button type="button" data-mode="outage" aria-pressed="false">停電</button>
+      </div>
+      <svg viewBox="0 0 640 400" aria-hidden="true">
+        <!-- 太陽（ロゴの菱形） -->
+        <rect class="sun" x="70" y="40" width="44" height="44" transform="rotate(45 92 62)"/>
+        <text class="label" x="62" y="122">太陽</text>
+        <!-- 電力会社 -->
+        <path class="obj" d="M40 200 V360 M24 214 H56 M28 232 H52"/>
+        <text class="label" x="14" y="386">電力会社</text>
+        <!-- 家と屋根のパネル -->
+        <path class="obj" d="M200 220 L330 130 L460 220 V360 H200 Z"/>
+        <polygon points="262,188 312,153 340,172 290,207" fill="#F5E528" fill-opacity=".9"/>
+        <text class="label" x="300" y="300">家</text>
+        <!-- 蓄電池 -->
+        <rect class="obj" x="530" y="250" width="56" height="110"/>
+        <rect class="battery-level" x="536" y="290" width="44" height="64"/>
+        <text class="label" x="530" y="386">蓄電池</text>
+        <!-- 流れ -->
+        <path class="line f-sun" d="M120 86 L272 176"/>
+        <path class="line f-use" d="M300 210 L318 280"/>
+        <path class="line f-charge" d="M340 175 C 450 160, 558 190, 558 244"/>
+        <path class="line f-discharge" d="M526 320 L400 320"/>
+        <path class="line f-grid" d="M56 300 L196 300"/>
+        <path class="cut" d="M116 286 L136 314 M136 286 L116 314"/>
+      </svg>
+      <figcaption class="caption" aria-live="polite"></figcaption>
+    </figure>
+  </div>
+</section>
+
+<section class="subsidy" id="subsidy">
+  <div class="wrap">
+    <div>
+      <h2>名取市の補助金は、太陽光と蓄電池の同時設置が対象です。</h2>
+      <p>設置後の事後申請で、先着順です。予算に達した時点で受付が終わります。</p>
+    </div>
+    <dl class="figures">
+      <div><dd>10<small>万円</small></dd><dt>1件あたり（同時設置）</dt></div>
+      <div><dd>12.31</dd><dt>設置・電力受給開始の期限（2026年）</dt></div>
+      <div><dd>2.1</dd><dt>市への申請締切（2027年）</dt></div>
+    </dl>
+  </div>
+</section>
+
+<script>
+  const MODES = {
+    day: { on: ['f-sun', 'f-use', 'f-charge'], level: 64, text: '昼は、太陽光でつくった電気を家で使い、余った分を蓄電池にためます。' },
+    night: { on: ['f-discharge'], level: 30, text: '夜は、昼にためた電気を使います。電力会社から買う電気を減らせます。' },
+    outage: { on: ['f-sun', 'f-use', 'f-charge', 'f-discharge'], level: 48, text: '停電しても、太陽光と蓄電池から家に電気を送れます。使える範囲は蓄電池の種類で変わります。' },
+  };
+  const flow = document.querySelector('.flow');
+  const level = flow.querySelector('.battery-level');
+  function setMode(mode) {
+    const m = MODES[mode];
+    flow.dataset.mode = mode;
+    flow.querySelectorAll('.line').forEach((el) => el.classList.toggle('on', m.on.some((c) => el.classList.contains(c))));
+    flow.querySelectorAll('.modes button').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.mode === mode)));
+    level.setAttribute('height', m.level);
+    level.setAttribute('y', 354 - m.level);
+    flow.querySelector('.caption').textContent = m.text;
+  }
+  flow.querySelectorAll('.modes button').forEach((b) => b.addEventListener('click', () => setMode(b.dataset.mode)));
+  setMode('day');
+</script>
+</body>
+</html>
