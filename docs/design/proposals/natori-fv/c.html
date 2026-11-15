@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>C案 縦書きの明朝｜名取LP</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@500;600;700&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #040000;
+    --sub: #555B63;
+    --line: #DADCDF;
+    --yellow: #F5E528;
+    --paper: #FFFFFF;
+    --img: url("../../../../src-next/public/images/solar/town-sunrise.webp");
+  }
+  * { box-sizing: border-box; margin: 0; }
+  body { background: var(--paper); color: var(--ink); font-family: "Zen Kaku Gothic New", sans-serif; -webkit-font-smoothing: antialiased; }
+  a { color: inherit; text-decoration: none; }
+  a:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
+
+  .fv { min-height: 100svh; display: grid; grid-template-rows: auto 1fr; }
+
+  header { display: flex; align-items: center; gap: 40px; padding: 22px 56px; border-bottom: 1px solid var(--line); }
+  header img { height: 34px; display: block; }
+  header nav { display: flex; gap: 32px; margin-left: auto; font-size: 14px; font-weight: 500; }
+  .tel { font-family: "Shippori Mincho", serif; font-size: 22px; font-weight: 600; }
+  .tel small { display: block; font-family: "Zen Kaku Gothic New", sans-serif; font-size: 11px; font-weight: 400; color: var(--sub); }
+
+  .main { display: grid; grid-template-columns: 1fr auto minmax(0, 40%); align-items: stretch; }
+  .copy { padding: 64px 56px; display: flex; flex-direction: column; justify-content: center; }
+  h1 { font-size: 15px; font-weight: 500; color: var(--sub); letter-spacing: .06em; }
+  .body { font-family: "Shippori Mincho", serif; font-size: 17px; font-weight: 500; line-height: 2.2; margin-top: 24px; max-width: 26em; }
+  .actions { display: flex; align-items: center; gap: 28px; margin-top: 40px; flex-wrap: wrap; }
+  .btn { display: inline-block; background: var(--ink); color: #fff; font-size: 16px; font-weight: 700; padding: 20px 36px; }
+  .btn:hover { background: #2a2626; }
+  .phone { font-size: 15px; font-weight: 500; border-bottom: 1px solid var(--ink); padding-bottom: 3px; }
+  .facts { display: flex; gap: 40px; margin-top: 56px; padding-top: 22px; border-top: 1px solid var(--line); }
+  .facts dt { font-size: 12px; color: var(--sub); }
+  .facts dd { font-family: "Shippori Mincho", serif; font-size: 20px; font-weight: 600; margin-top: 4px; }
+
+  /* 縦書きの見出し。ロゴの黄色を細い縦線として添える */
+  .lead { writing-mode: vertical-rl; font-family: "Shippori Mincho", serif; font-weight: 600; font-size: clamp(40px, 4.6vw, 68px); line-height: 1.5; letter-spacing: .14em; padding: 64px 40px 64px 48px; border-right: 4px solid var(--yellow); margin-right: 32px; align-self: start; }
+  .photo { background: var(--img) center 70% / cover no-repeat; min-height: 560px; }
+
+  @media (max-width: 860px) {
+    header { padding: 14px 16px; gap: 16px; }
+    header img { height: 28px; }
+    header nav { display: none; }
+    .tel { margin-left: auto; font-size: 18px; }
+    .main { grid-template-columns: 1fr auto; }
+    .photo { grid-column: 1 / -1; grid-row: 1; min-height: 0; aspect-ratio: 5 / 4; }
+    .lead { grid-column: 2; grid-row: 2; font-size: 30px; padding: 28px 12px 0 16px; margin-right: 16px; border-right-width: 3px; }
+    .copy { grid-column: 1; grid-row: 2; padding: 28px 0 32px 16px; justify-content: flex-start; }
+    .body { font-size: 15px; line-height: 2; margin-top: 14px; }
+    .actions { margin-top: 24px; gap: 16px; }
+    .btn { width: 100%; text-align: center; padding: 18px 12px; }
+    .facts { grid-column: 1 / -1; flex-direction: column; gap: 12px; margin-top: 28px; }
+  }
+</style>
+</head>
+<body>
+<div class="fv">
+  <header>
+    <img src="../../../../src-next/public/images/solar/sc-logo.png" alt="株式会社SC">
+    <nav><a href="#">補助金</a><a href="#">導入の流れ</a><a href="#">よくある質問</a></nav>
+    <a class="tel" href="tel:0223548345"><small>9:00〜21:00 年中無休</small>022-354-8345</a>
+  </header>
+
+  <div class="main">
+    <div class="copy">
+      <h1>名取市の太陽光発電・蓄電池</h1>
+      <p class="body">名取市の補助金は、太陽光と蓄電池を一緒に設置すると対象になります。手倉田に本社を置く当社が、ご自宅の屋根と暮らしに合わせてご提案します。</p>
+      <div class="actions">
+        <a class="btn" href="#">補助金の対象か相談する</a>
+        <a class="phone" href="tel:0223548345">電話で相談 022-354-8345</a>
+      </div>
+      <dl class="facts">
+        <div><dt>名取市の補助（太陽光＋蓄電池）</dt><dd>1件 10万円</dd></div>
+        <div><dt>設置・電力受給開始の期限</dt><dd>2026年12月31日</dd></div>
+      </dl>
+    </div>
+    <p class="lead">この町の陽を、<br>暮らしの電気に。</p>
+    <div class="photo" role="img" aria-label="町の朝日（イメージ）"></div>
+  </div>
+</div>
+</body>
+</html>

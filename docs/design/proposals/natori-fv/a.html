@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>A案 昼の家｜名取LP</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #040000;
+    --sub: #4F5660;
+    --line: #D8DBDF;
+    --yellow: #F5E528;
+    --paper: #FFFFFF;
+    --img: url("../../../../src-next/public/images/solar/roof-panels.webp");
+  }
+  * { box-sizing: border-box; margin: 0; }
+  body { background: var(--paper); color: var(--ink); font-family: "Zen Kaku Gothic New", sans-serif; -webkit-font-smoothing: antialiased; }
+  a { color: inherit; text-decoration: none; }
+  a:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
+
+  .fv { min-height: 100svh; display: grid; grid-template-rows: auto 1fr auto; }
+
+  header { display: flex; align-items: center; gap: 40px; padding: 22px 56px; }
+  header img { height: 34px; display: block; }
+  header nav { display: flex; gap: 32px; margin-left: auto; font-size: 14px; font-weight: 500; }
+  .tel { font-size: 20px; font-weight: 700; letter-spacing: .02em; font-feature-settings: "palt"; }
+  .tel small { display: block; font-size: 11px; font-weight: 400; color: var(--sub); letter-spacing: .04em; }
+
+  .main { display: grid; grid-template-columns: 6fr 6fr; }
+  .copy { padding: 40px 56px; display: flex; flex-direction: column; justify-content: center; }
+  h1 { font-size: 15px; font-weight: 500; color: var(--sub); letter-spacing: .06em; }
+  .lead { font-size: clamp(40px, 4.2vw, 60px); font-weight: 700; line-height: 1.32; letter-spacing: .01em; margin-top: 22px; font-feature-settings: "palt"; word-break: keep-all; }
+  .body { font-size: 16px; line-height: 2; color: var(--sub); margin-top: 28px; max-width: 30em; }
+  .actions { display: flex; align-items: center; gap: 28px; margin-top: 44px; flex-wrap: wrap; }
+  .btn { display: inline-block; background: var(--ink); color: #fff; font-size: 16px; font-weight: 700; padding: 20px 36px; border-bottom: 4px solid var(--yellow); }
+  .btn:hover { background: #2a2626; }
+  .phone { font-size: 15px; font-weight: 500; border-bottom: 1px solid var(--ink); padding-bottom: 3px; }
+  .photo { background: var(--img) center 40% / cover no-repeat; min-height: 420px; }
+
+  .facts { display: grid; grid-template-columns: repeat(3, 1fr); border-top: 1px solid var(--line); }
+  .facts div { padding: 22px 56px; border-left: 1px solid var(--line); }
+  .facts div:first-child { border-left: 0; }
+  .facts dt { font-size: 12px; color: var(--sub); }
+  .facts dd { font-size: 20px; font-weight: 700; margin-top: 6px; font-feature-settings: "palt"; }
+  .facts small { font-size: 13px; font-weight: 500; margin-left: 4px; }
+
+  @media (max-width: 860px) {
+    header { padding: 14px 16px; gap: 16px; }
+    header img { height: 28px; }
+    header nav { display: none; }
+    .tel { margin-left: auto; font-size: 16px; }
+    .main { grid-template-columns: 1fr; }
+    .photo { order: -1; min-height: 0; aspect-ratio: 4 / 3; }
+    .copy { padding: 28px 16px 32px; }
+    .lead { font-size: 32px; margin-top: 12px; }
+    .body { font-size: 15px; margin-top: 16px; }
+    .actions { margin-top: 28px; gap: 20px; }
+    .btn { width: 100%; text-align: center; }
+    .facts { grid-template-columns: 1fr; }
+    .facts div { padding: 14px 16px; border-left: 0; border-top: 1px solid var(--line); display: flex; justify-content: space-between; align-items: baseline; }
+    .facts div:first-child { border-top: 0; }
+    .facts dd { margin: 0; font-size: 17px; }
+  }
+</style>
+</head>
+<body>
+<div class="fv">
+  <header>
+    <img src="../../../../src-next/public/images/solar/sc-logo.png" alt="株式会社SC">
+    <nav><a href="#">補助金</a><a href="#">導入の流れ</a><a href="#">よくある質問</a></nav>
+    <a class="tel" href="tel:0223548345"><small>9:00〜21:00 年中無休</small>022-354-8345</a>
+  </header>
+
+  <div class="main">
+    <div class="copy">
+      <h1>名取市の太陽光発電・蓄電池</h1>
+      <p class="lead">名取の家で、<br>電気をつくって、<br>ためる。</p>
+      <p class="body">名取市の補助金は、太陽光と蓄電池を一緒に設置すると対象になります。対象になるか、年内の設置に間に合うかを、手倉田の当社がご自宅の条件で確かめます。</p>
+      <div class="actions">
+        <a class="btn" href="#">補助金の対象か相談する</a>
+        <a class="phone" href="tel:0223548345">電話で相談 022-354-8345</a>
+      </div>
+    </div>
+    <div class="photo" role="img" aria-label="屋根の太陽光パネル（イメージ）"></div>
+  </div>
+
+  <dl class="facts">
+    <div><dt>名取市の補助（太陽光＋蓄電池）</dt><dd>1件 10<small>万円</small></dd></div>
+    <div><dt>設置・電力受給開始の期限</dt><dd>2026年12月31日</dd></div>
+    <div><dt>本社</dt><dd>名取市手倉田</dd></div>
+  </dl>
+</div>
+</body>
+</html>
