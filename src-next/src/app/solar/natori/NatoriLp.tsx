@@ -14,6 +14,7 @@ import { COMPANY } from '@/lib/company';
 import { trackEvent, type CtaLocation } from '@/lib/tracking';
 import { FAQS, REQUIREMENTS, STEPS, WORRIES } from './lp-content';
 import './natori-lp.css';
+import './natori-lp-themes.css';
 
 function telClick(ctaLocation: CtaLocation) {
   trackEvent('tel_click', { cta_location: ctaLocation, link_url: COMPANY.telHref });
@@ -42,11 +43,22 @@ function SectionTitle({ eyebrow, children, lead }: { eyebrow: string; children: 
   )
 }
 
-export default function NatoriLp({ fontClassName }: { fontClassName: string }) {
+// デザイン案の着せ替え（natori-lp-themes.css）。プレビュー（/preview/natori/<theme>/）でだけ使う
+export type NatoriLpTheme = 'a' | 'b' | 'c';
+
+const HERO_IMAGES: Record<NatoriLpTheme | 'default', { src: string; alt: string }> = {
+  default: { src: '/images/solar/natori-lp-hero.webp', alt: '緑に囲まれた住宅' },
+  a: { src: '/images/solar/roof-panels.webp', alt: '屋根の太陽光パネル（イメージ）' },
+  b: { src: '/images/solar/japanese-roof.webp', alt: '住宅の屋根（イメージ）' },
+  c: { src: '/images/solar/town-sunrise.webp', alt: '町の朝日（イメージ）' },
+};
+
+export default function NatoriLp({ fontClassName, theme }: { fontClassName: string; theme?: NatoriLpTheme }) {
   const [openFaq, setOpenFaq] = useState(0)
+  const hero = HERO_IMAGES[theme ?? 'default']
 
   return (
-    <div className={`nlp ${fontClassName}`}>
+    <div className={`nlp ${theme ? `t t-${theme}` : ''} ${fontClassName}`}>
       <header className="header">
         <div className="topbar">名取市の太陽光発電・蓄電池は、地元の株式会社SCへ</div>
         <div className="nav shell">
@@ -59,7 +71,7 @@ export default function NatoriLp({ fontClassName }: { fontClassName: string }) {
 
       <main>
         <section className="hero">
-          <Image src="/images/solar/natori-lp-hero.webp" alt="緑に囲まれた住宅" fill preload sizes="100vw" />
+          <Image src={hero.src} alt={hero.alt} fill preload sizes="100vw" />
           <div className="hero-shade" />
           <div className="shell hero-content">
             <div className="local-chip">宮城県名取市・地域密着</div>
