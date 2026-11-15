@@ -1,0 +1,487 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>D-2 夜｜名取LP</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+  /* D-2: 黒地。ロゴの黄色を「電気の光」として扱う。菱形は線で描かれ、1枚だけが黄色く灯る */
+  :root {
+    --ink: #040000;
+    --yellow: #F5E528;
+    --pale: #F7EE80;
+    --white: #FFFFFF;
+    --mist: rgba(255,255,255,.68);
+    --rule: rgba(255,255,255,.16);
+    --raise: #141010;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { background: var(--ink); color: var(--white); font-family: "Noto Sans JP", sans-serif; -webkit-font-smoothing: antialiased; letter-spacing: .04em; line-height: 1.8; }
+  img { display: block; max-width: 100%; }
+  a { color: inherit; text-decoration: none; }
+  :is(a, summary):focus-visible { outline: 2px solid var(--yellow); outline-offset: 4px; }
+  .wrap { width: min(1240px, 100% - 32px); margin-inline: auto; }
+  h1, h2, h3, .lead { font-feature-settings: "palt"; word-break: auto-phrase; }
+  .section { padding: 150px 0; border-top: 1px solid var(--rule); }
+  .sec-title { font-size: clamp(28px, 3vw, 44px); font-weight: 500; line-height: 1.45; }
+  .sec-lead { font-size: 16px; color: var(--mist); margin-top: 20px; max-width: 38em; line-height: 2; }
+
+  /* 写真はロゴと同じ45度の平行四辺形で切る（縦横比 2:1 のとき、上辺と下辺がちょうど半分ずれる） */
+  .rhombus { aspect-ratio: 2 / 1; clip-path: polygon(50% 0, 100% 0, 50% 100%, 0 100%); }
+  .rhombus img { width: 100%; height: 100%; object-fit: cover; }
+
+  .btn { display: inline-flex; align-items: center; justify-content: center; gap: 18px; background: var(--yellow); color: var(--ink); font-size: 16px; font-weight: 700; padding: 22px 36px; transition: background .2s; }
+  .btn::after { content: ""; width: 9px; height: 9px; background: var(--ink); transform: rotate(45deg); }
+  .btn:hover { background: #fff36a; }
+  .btn.dark { background: var(--ink); color: var(--white); }
+  .btn.dark::after { background: var(--yellow); }
+  .btn.dark:hover { background: #2b2727; }
+  .phone { font-size: 15px; font-weight: 500; border-bottom: 1px solid currentColor; padding-bottom: 4px; }
+
+  /* ---- ヘッダー ---- */
+  header { position: absolute; inset: 0 0 auto; z-index: 5; }
+  header .wrap { display: flex; align-items: center; gap: 40px; height: 88px; }
+  header img { height: 30px; width: auto; }
+  header nav { display: flex; gap: 32px; margin-left: auto; font-size: 14px; color: var(--mist); }
+  header nav a:hover { color: var(--white); }
+  .tel { font-size: 19px; font-weight: 500; line-height: 1.2; text-align: right; }
+  .tel small { display: block; font-size: 11px; color: var(--mist); }
+
+  /* ---- FV ---- */
+  .fv { position: relative; min-height: 100svh; display: grid; align-items: end; overflow: hidden; isolation: isolate; }
+  .fv > img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: -2; }
+  .fv::after { content: ""; position: absolute; inset: 0; z-index: -1; background: linear-gradient(90deg, rgba(4,0,0,.92) 0%, rgba(4,0,0,.7) 45%, rgba(4,0,0,.25) 100%), linear-gradient(0deg, rgba(4,0,0,.9) 0%, rgba(4,0,0,0) 40%); }
+  .fv .wrap { display: grid; grid-template-columns: 7fr 5fr; gap: 40px; align-items: end; padding: 140px 0 72px; }
+  .fv h1 { font-size: 14px; font-weight: 500; color: var(--mist); letter-spacing: .1em; }
+  .fv .lead { font-size: clamp(46px, 6vw, 92px); font-weight: 500; line-height: 1.2; margin-top: 24px; letter-spacing: .02em; }
+  .fv .body { font-size: 16px; line-height: 2; color: var(--mist); margin-top: 32px; max-width: 30em; }
+  .actions { display: flex; align-items: center; gap: 32px; margin-top: 44px; flex-wrap: wrap; }
+  .mark { width: 100%; height: auto; display: block; }
+  .mark .edge { fill: none; stroke: var(--white); stroke-width: 2; stroke-opacity: .7; }
+  .mark .lit { fill: var(--yellow); }
+  /* 読み込み時、線が描かれてから1枚が灯る（この案で唯一の動き） */
+  @media (prefers-reduced-motion: no-preference) {
+    .mark .edge { stroke-dasharray: 1400; stroke-dashoffset: 1400; animation: draw 1.4s cubic-bezier(.4,0,.2,1) forwards; }
+    .mark .edge:nth-of-type(2) { animation-delay: .15s; }
+    .mark .edge:nth-of-type(3) { animation-delay: .3s; }
+    .mark .lit { opacity: 0; animation: lit .5s ease-out 1.3s forwards; }
+    @keyframes draw { to { stroke-dashoffset: 0; } }
+    @keyframes lit { to { opacity: 1; } }
+  }
+  .fv-facts { display: flex; gap: 0; margin-top: 64px; border-top: 1px solid var(--rule); }
+  .fv-facts div { padding: 18px 40px 0 0; margin-right: 40px; border-right: 1px solid var(--rule); }
+  .fv-facts div:last-child { border: 0; }
+  .fv-facts b { display: block; font-size: 22px; font-weight: 500; }
+  .fv-facts b em { font-style: normal; color: var(--yellow); }
+  .fv-facts span { font-size: 12px; color: var(--mist); }
+
+  /* ---- 期限 ---- */
+  .deadline { background: var(--yellow); color: var(--ink); }
+  .deadline .wrap { display: flex; align-items: center; gap: 40px; padding: 26px 0; }
+  .deadline b { font-size: 30px; font-weight: 700; letter-spacing: .02em; white-space: nowrap; }
+  .deadline p { font-size: 15px; font-weight: 500; margin-right: auto; }
+  .deadline a { font-size: 15px; font-weight: 700; border-bottom: 1.5px solid var(--ink); padding-bottom: 3px; white-space: nowrap; }
+
+  /* ---- お悩み ---- */
+  .worries .wrap { display: grid; grid-template-columns: 4fr 8fr; gap: 64px; }
+  .worries ul { list-style: none; }
+  .worries li { font-size: clamp(18px, 1.8vw, 24px); font-weight: 500; padding: 22px 0; border-bottom: 1px solid var(--rule); color: var(--mist); transition: color .2s; }
+  .worries li:first-child { padding-top: 0; }
+  .worries li:hover { color: var(--white); }
+
+  /* ---- 補助金 ---- */
+  .subsidy { position: relative; overflow: hidden; }
+  .subsidy .grid { display: grid; grid-template-columns: 5fr 7fr; gap: 64px; align-items: end; }
+  .hero-num { position: relative; display: flex; align-items: flex-end; gap: 12px; }
+  .hero-num b { font-size: clamp(160px, 21vw, 320px); font-weight: 700; line-height: .78; letter-spacing: -.05em; color: var(--yellow); }
+  .hero-num span { font-size: 32px; font-weight: 500; }
+  .hero-num small { display: block; font-size: 14px; color: var(--mist); margin-bottom: 8px; }
+  .sub-amounts { display: grid; grid-template-columns: 1fr 1fr; margin-top: 64px; border-top: 1px solid var(--rule); }
+  .sub-amounts div { padding: 22px 32px 0 0; }
+  .sub-amounts dt { font-size: 13px; color: var(--mist); }
+  .sub-amounts dd { font-size: 28px; font-weight: 500; margin-top: 4px; }
+  .updated { font-size: 13px; color: var(--mist); margin-top: 24px; }
+
+  .eligibility { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 120px; }
+  .eligibility > div { background: var(--raise); padding: 40px; border-top: 3px solid var(--yellow); }
+  .eligibility > div + div { border-top-color: var(--rule); }
+  .eligibility h3 { font-size: 20px; font-weight: 500; }
+  .eligibility ul { list-style: none; margin-top: 18px; }
+  .eligibility li { position: relative; padding: 10px 0 10px 28px; font-size: 15px; color: var(--mist); border-top: 1px solid var(--rule); }
+  .eligibility li::before { position: absolute; left: 0; color: var(--white); font-weight: 700; }
+  .ok li::before { content: "○"; color: var(--yellow); }
+  .ng li::before { content: "×"; }
+
+  .conditions { margin-top: 120px; display: grid; grid-template-columns: 4fr 8fr; gap: 64px; }
+  .conditions h3 { font-size: 24px; font-weight: 500; line-height: 1.5; }
+  .conditions ul { list-style: none; border-top: 1px solid var(--rule); }
+  .conditions li { display: grid; grid-template-columns: 76px 1fr; gap: 24px; padding: 26px 0; border-bottom: 1px solid var(--rule); }
+  .tag { font-size: 12px; font-weight: 700; color: var(--mist); padding-top: 4px; }
+  .tag.must, .tag.date { color: var(--yellow); }
+  .conditions h4 { font-size: 18px; font-weight: 500; }
+  .conditions p { font-size: 14px; color: var(--mist); margin-top: 4px; }
+  .note { font-size: 13px; color: var(--mist); margin-top: 28px; }
+
+  /* ---- 宮城県 ---- */
+  .pref .wrap { display: grid; grid-template-columns: 4fr 8fr; gap: 64px; }
+  .pref dl { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--rule); border: 1px solid var(--rule); }
+  .pref dl div { background: var(--ink); padding: 28px; }
+  .pref dt { font-size: 15px; font-weight: 500; }
+  .pref dt small { display: block; font-size: 12px; color: var(--mist); }
+  .pref dd { font-size: 52px; font-weight: 500; color: var(--yellow); margin-top: 18px; line-height: 1; }
+  .pref dd small { font-size: 18px; color: var(--white); margin-left: 4px; }
+  .pref .note { grid-column: 2; margin-top: 0; }
+
+  /* ---- 流れ: 縦の線に菱形の節 ---- */
+  .flow .wrap { display: grid; grid-template-columns: 5fr 7fr; gap: 64px; align-items: start; }
+  .flow .stick { position: sticky; top: 64px; }
+  .dates { margin-top: 48px; border-top: 1px solid var(--rule); }
+  .dates div { padding: 18px 0; border-bottom: 1px solid var(--rule); }
+  .dates span { font-size: 13px; color: var(--mist); }
+  .dates b { display: block; font-size: 28px; font-weight: 500; }
+  .dates div:first-child b { color: var(--yellow); }
+  .steps { list-style: none; position: relative; counter-reset: s; }
+  .steps::before { content: ""; position: absolute; left: 11px; top: 14px; bottom: 14px; width: 1px; background: var(--rule); }
+  .steps li { counter-increment: s; position: relative; display: grid; grid-template-columns: 48px 40px 1fr; align-items: baseline; padding: 26px 0; border-bottom: 1px solid var(--rule); font-size: 20px; font-weight: 500; }
+  .steps li::before { content: ""; width: 12px; height: 12px; margin-left: 5px; border: 1.5px solid var(--white); background: var(--ink); transform: rotate(45deg); align-self: center; }
+  .steps li::after { content: counter(s); grid-column: 2; grid-row: 1; font-size: 13px; color: var(--mist); }
+  .steps li.key::before { background: var(--yellow); border-color: var(--yellow); box-shadow: 0 0 24px rgba(245,229,40,.6); }
+  .steps li.key { color: var(--yellow); }
+  .steps li small { font-size: 13px; margin-left: 12px; }
+
+  /* ---- 中間CTA ---- */
+  .cta { padding: 96px 0; border-top: 1px solid var(--rule); background: var(--raise); }
+  .cta .wrap { display: flex; align-items: center; gap: 40px; }
+  .cta .wrap > div { margin-right: auto; }
+  .cta small { font-size: 14px; color: var(--mist); }
+  .cta h2 { font-size: clamp(24px, 2.4vw, 34px); font-weight: 500; margin-top: 6px; }
+
+  /* ---- 名取市のポイント ---- */
+  .points ol { list-style: none; margin-top: 72px; }
+  .points li { display: grid; grid-template-columns: 6fr 5fr; gap: 64px; align-items: center; padding: 40px 0; }
+  .points li:nth-child(even) .rhombus { order: 2; }
+  .points h3 { font-size: 26px; font-weight: 500; }
+  .points p { font-size: 15px; color: var(--mist); line-height: 2; margin-top: 14px; }
+
+  /* ---- 停電 ---- */
+  .backup { position: relative; min-height: 100svh; display: grid; align-items: center; overflow: hidden; isolation: isolate; }
+  .backup > img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: -2; }
+  .backup::after { content: ""; position: absolute; inset: 0; z-index: -1; background: linear-gradient(90deg, rgba(4,0,0,.1) 30%, rgba(4,0,0,.88) 65%); }
+  .backup .wrap { display: grid; grid-template-columns: 1fr 1fr; padding: 120px 0; }
+  .backup .copy { grid-column: 2; }
+  .backup .lead { font-size: clamp(34px, 4vw, 58px); font-weight: 500; line-height: 1.35; }
+  .backup .body { color: var(--mist); font-size: 16px; line-height: 2; margin-top: 24px; }
+  .loads { width: 100%; border-collapse: collapse; margin-top: 40px; font-size: 15px; }
+  .loads th, .loads td { border-bottom: 1px solid var(--rule); padding: 14px 8px; text-align: center; }
+  .loads thead th { font-weight: 500; font-size: 14px; }
+  .loads thead th small { display: block; font-size: 12px; color: var(--mist); }
+  .loads tbody th { text-align: left; font-weight: 400; color: var(--mist); }
+  .loads .y { color: var(--yellow); }
+  .loads .n { color: rgba(255,255,255,.3); }
+
+  /* ---- 選ばれる理由 ---- */
+  .reasons ol { list-style: none; display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 64px; }
+  .reasons li { background: var(--raise); padding: 40px 32px 44px; }
+  .reasons li::before { content: ""; display: block; width: 12px; height: 12px; background: var(--yellow); transform: rotate(45deg); margin-bottom: 40px; }
+  .reasons h3 { font-size: 22px; font-weight: 500; }
+  .reasons p { font-size: 15px; color: var(--mist); margin-top: 12px; line-height: 2; }
+  .address { margin-top: 48px; color: var(--mist); font-size: 15px; }
+
+  /* ---- FAQ ---- */
+  .faq .wrap { display: grid; grid-template-columns: 4fr 8fr; gap: 64px; }
+  .faq details { border-bottom: 1px solid var(--rule); }
+  .faq details:first-child { border-top: 1px solid var(--rule); }
+  .faq summary { list-style: none; cursor: pointer; display: flex; gap: 24px; justify-content: space-between; align-items: center; padding: 26px 0; font-size: 17px; font-weight: 500; }
+  .faq summary::-webkit-details-marker { display: none; }
+  .faq summary::after { content: ""; flex: none; width: 11px; height: 11px; border: 1.5px solid var(--white); transform: rotate(45deg); transition: background .2s, border-color .2s; }
+  .faq details[open] summary::after { background: var(--yellow); border-color: var(--yellow); }
+  .faq details p { padding: 0 40px 28px 0; color: var(--mist); font-size: 15px; line-height: 2; }
+
+  /* ---- 相談: 最後だけ黄色に反転 ---- */
+  .contact { background: var(--yellow); color: var(--ink); padding: 140px 0; overflow: hidden; }
+  .contact .wrap { display: grid; grid-template-columns: 7fr 5fr; gap: 64px; align-items: center; }
+  .contact h2 { font-size: clamp(32px, 3.8vw, 56px); font-weight: 700; line-height: 1.35; }
+  .contact p { margin-top: 24px; font-size: 16px; line-height: 2; }
+  .contact .tel-big { display: block; white-space: nowrap; font-size: clamp(36px, 4.4vw, 64px); font-weight: 700; letter-spacing: .02em; line-height: 1.1; }
+  .contact .tel-big + small { display: block; font-size: 13px; margin-top: 8px; }
+  .contact .actions { margin-top: 32px; }
+
+  footer { font-size: 13px; color: var(--mist); }
+  footer .wrap { display: flex; gap: 32px; align-items: center; padding: 36px 0; }
+  footer img { height: 26px; width: auto; margin-right: auto; }
+
+  .mobile-bar { display: none; }
+
+  @media (max-width: 860px) {
+    .section { padding: 88px 0; }
+    header .wrap { height: 64px; gap: 16px; }
+    header img { height: 26px; }
+    header nav { display: none; }
+    .tel { margin-left: auto; font-size: 16px; }
+    .fv { align-items: end; }
+    .fv::after { background: linear-gradient(0deg, rgba(4,0,0,.95) 0%, rgba(4,0,0,.75) 55%, rgba(4,0,0,.35) 100%); }
+    .fv .wrap { grid-template-columns: 1fr; padding: 96px 0 40px; gap: 0; }
+    .fv .visual { order: -1; width: 46%; margin: 0 0 20px auto; }
+    .fv .lead { font-size: 40px; margin-top: 14px; }
+    .fv .body { font-size: 15px; margin-top: 20px; }
+    .actions { margin-top: 28px; gap: 20px; }
+    .btn { width: 100%; }
+    .fv-facts { margin-top: 36px; flex-direction: column; }
+    .fv-facts div { margin: 0; border-right: 0; border-bottom: 1px solid var(--rule); padding: 12px 0; display: flex; justify-content: space-between; align-items: baseline; }
+    .fv-facts b { font-size: 18px; }
+    .deadline .wrap { flex-direction: column; align-items: flex-start; gap: 8px; padding: 22px 0; }
+    .deadline b { font-size: 26px; }
+    .worries .wrap, .conditions, .pref .wrap, .flow .wrap, .faq .wrap { grid-template-columns: 1fr; gap: 32px; }
+    .subsidy .grid { grid-template-columns: 1fr; gap: 40px; }
+    .hero-num b { font-size: 150px; }
+    .hero-num span { font-size: 24px; }
+    .eligibility { grid-template-columns: 1fr; margin-top: 80px; }
+    .eligibility > div { padding: 28px 20px; }
+    .conditions { margin-top: 80px; }
+    .conditions li { grid-template-columns: 1fr; gap: 4px; }
+    .pref dl { grid-template-columns: 1fr; }
+    .pref dl div { display: flex; justify-content: space-between; align-items: center; padding: 20px; }
+    .pref dd { margin: 0; font-size: 40px; }
+    .pref .note { grid-column: auto; }
+    .flow .stick { position: static; }
+    .steps li { font-size: 17px; padding: 20px 0; grid-template-columns: 40px 32px 1fr; }
+    .cta .wrap { flex-direction: column; align-items: stretch; gap: 24px; }
+    .points ol { margin-top: 32px; }
+    .points li { grid-template-columns: 1fr; gap: 24px; padding: 32px 0; }
+    .points li:nth-child(even) .rhombus { order: 0; }
+    .points h3 { font-size: 22px; }
+    .backup { min-height: 0; }
+    .backup::after { background: linear-gradient(0deg, rgba(4,0,0,.95) 45%, rgba(4,0,0,.35) 100%); }
+    .backup .wrap { grid-template-columns: 1fr; padding: 280px 0 80px; }
+    .backup .copy { grid-column: auto; }
+    .backup .lead { font-size: 32px; }
+    .reasons ol { grid-template-columns: 1fr; margin-top: 32px; gap: 12px; }
+    .reasons li { padding: 28px 24px; }
+    .reasons li::before { margin-bottom: 20px; }
+    .faq summary { font-size: 16px; }
+    .contact { padding: 88px 0; }
+    .contact .wrap { grid-template-columns: 1fr; gap: 40px; }
+    footer .wrap { flex-direction: column; align-items: flex-start; gap: 8px; padding-bottom: 96px; }
+    .mobile-bar { display: grid; grid-template-columns: 1fr 1fr; position: fixed; inset: auto 0 0; z-index: 20; font-size: 15px; font-weight: 700; text-align: center; border-top: 1px solid var(--rule); }
+    .mobile-bar a { padding: 18px 0; background: var(--ink); }
+    .mobile-bar a + a { background: var(--yellow); color: var(--ink); }
+  }
+</style>
+</head>
+<body>
+<header><div class="wrap">
+  <img src="../../../../src-next/public/images/solar/sc-logo-white.png" alt="株式会社SC">
+  <nav><a href="#subsidy">補助金</a><a href="#flow">導入の流れ</a><a href="#backup">停電への備え</a><a href="#faq">よくある質問</a></nav>
+  <a class="tel" href="tel:0223548345"><small>9:00〜21:00 年中無休</small>022-354-8345</a>
+</div></header>
+
+<main>
+<section class="fv">
+  <img src="img/panels-dark.webp" alt="屋根の太陽光パネル（イメージ）">
+  <div class="wrap">
+    <div>
+      <h1>名取市の太陽光発電・蓄電池</h1>
+      <p class="lead">名取の夜を、<br>自分の家の電気で。</p>
+      <p class="body">昼に屋根でつくった電気を蓄電池にためて、夜や停電のときに使う。名取市の補助金は、太陽光と蓄電池を一緒に設置すると対象になります。</p>
+      <div class="actions">
+        <a class="btn" href="#contact">補助金の対象か相談する</a>
+        <a class="phone" href="tel:0223548345">電話で相談 022-354-8345</a>
+      </div>
+      <div class="fv-facts">
+        <div><b><em>10</em>万円</b><span>同時設置の補助額</span></div>
+        <div><b>年中無休</b><span>9:00〜21:00 受付</span></div>
+        <div><b>手倉田に本社</b><span>現地調査も近くから</span></div>
+      </div>
+    </div>
+    <div class="visual">
+      <svg class="mark" viewBox="-4 -4 793 797" role="img" aria-label="株式会社SCのロゴの菱形">
+        <polygon class="edge" points="391,0 633,0 242,390 0,390"/>
+        <polygon class="edge" points="0,399 242,399 382,539 262,659"/>
+        <polygon class="edge" points="543,399 785,399 394,789 152,789"/>
+        <polygon class="lit" points="523,129 785,390 543,390 403,250"/>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<section class="deadline">
+  <div class="wrap">
+    <b>2026.12.31</b>
+    <p>令和8年度の補助金は、この日までの設置・電力受給開始が対象です。工事と電力会社の手続きの期間を見込んで、お早めに。</p>
+    <a href="#contact">間に合うか相談する</a>
+  </div>
+</section>
+
+<section class="section worries">
+  <div class="wrap">
+    <h2 class="sec-title">こんなことで<br>迷っていませんか。</h2>
+    <ul>
+      <li>電気代が上がり続け、家計を見直したい</li>
+      <li>地震や停電に備えて、家で電気を使えるようにしたい</li>
+      <li>名取市の補助金が使えるのか、条件がわからない</li>
+      <li>卒FITを迎えた太陽光に、蓄電池を後付けしたい</li>
+      <li>訪問販売でもらった見積もりが妥当か相談したい</li>
+    </ul>
+  </div>
+</section>
+
+<section class="section subsidy" id="subsidy">
+  <div class="wrap">
+    <div class="grid">
+      <div>
+        <h2 class="sec-title">名取市の補助金は、<br>太陽光と蓄電池の<br>同時設置が対象です。</h2>
+        <p class="sec-lead">令和8年度 名取市住宅用再生可能エネルギー等設備導入補助金。設置が終わってから申請する事後申請で、先着順です。</p>
+      </div>
+      <div>
+        <div class="hero-num"><div><small>同時設置・1件あたり</small><b>10</b></div><span>万円</span></div>
+        <dl class="sub-amounts">
+          <div><dt>定置用蓄電池（太陽光と接続）</dt><dd>1件 6万円</dd></div>
+          <div><dt>市への申請締切</dt><dd>2027.2.1</dd></div>
+        </dl>
+        <p class="updated">2026年10月9日時点。予算に達した時点で受付が終わります。</p>
+      </div>
+    </div>
+
+    <div class="eligibility">
+      <div class="ok"><h3>対象になる</h3><ul><li>太陽光と定置用蓄電池を同時に設置</li><li>既存パネルへの増設と、蓄電池の新設</li><li>太陽光と接続する定置用蓄電池</li><li>購入した設備で、書類の名義が同じ</li></ul></div>
+      <div class="ng"><h3>対象にならない</h3><ul><li>太陽光発電だけの設置</li><li>リース・PPAなどの契約</li><li>対象期間外に設置した設備</li></ul></div>
+    </div>
+
+    <div class="conditions">
+      <h3>申請前に知っておきたい<br>5つの条件</h3>
+      <div>
+        <ul>
+          <li><span class="tag">対象外</span><div><h4>太陽光だけの設置は対象外</h4><p>蓄電池との同時設置、または既存パネルへの増設と蓄電池の新設が条件です。</p></div></li>
+          <li><span class="tag must">必須</span><div><h4>設置が終わってから申請する</h4><p>太陽光は、電力会社の電力受給契約確認書が届いてから申請します。</p></div></li>
+          <li><span class="tag date">期限</span><div><h4>2026年12月31日までの設置が対象</h4><p>申請締切は2027年2月1日。先着順で、予算に達した時点で終わります。</p></div></li>
+          <li><span class="tag">対象外</span><div><h4>リース・PPAは対象外</h4><p>購入した設備が対象です。期間満了後に所有権が移る契約も対象外です。</p></div></li>
+          <li><span class="tag must">必須</span><div><h4>書類の名義をすべて同じ人に</h4><p>契約書・領収書・申請書の名義をそろえる必要があります。</p></div></li>
+        </ul>
+        <p class="note">最新の受付状況は、名取市 環境共創課（022-724-7159）にご確認ください。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section pref">
+  <div class="wrap">
+    <h2 class="sec-title">宮城県の補助金</h2>
+    <dl>
+      <div><dt>太陽光発電<small>蓄エネ設備併設タイプ</small></dt><dd>3<small>万円</small></dd></div>
+      <div><dt>蓄電池<small>対象設備に限る</small></dt><dd>4<small>万円</small></dd></div>
+      <div><dt>V2H<small>EVと住宅をつなぐ設備</small></dt><dd>4<small>万円</small></dd></div>
+    </dl>
+    <p class="note">名取市の補助金と併用できるかも、あわせてご相談ください。</p>
+  </div>
+</section>
+
+<section class="section flow" id="flow">
+  <div class="wrap">
+    <div class="stick">
+      <h2 class="sec-title">ご相談から<br>補助金の入金まで</h2>
+      <p class="sec-lead">名取市は事後申請です。電力受給開始が期限に間に合うかが大切です。</p>
+      <div class="dates">
+        <div><span>設置・電力受給開始</span><b>2026年12月31日</b></div>
+        <div><span>名取市への申請締切</span><b>2027年2月1日</b></div>
+      </div>
+    </div>
+    <ol class="steps">
+      <li>ご相談</li><li>現地調査</li><li>お見積もり・ご契約</li><li>連系申請</li><li>工事</li><li class="key"><span>電力受給開始<small>12/31まで</small></span></li><li>市へ申請</li><li>補助金の入金</li>
+    </ol>
+  </div>
+</section>
+
+<section class="cta">
+  <div class="wrap">
+    <div><small>補助金の対象になるか。今から間に合うか。</small><h2>名取市手倉田の株式会社SCにご相談ください。</h2></div>
+    <a class="btn" href="#contact">フォームで相談する</a>
+    <a class="phone" href="tel:0223548345">022-354-8345</a>
+  </div>
+</section>
+
+<section class="section points">
+  <div class="wrap">
+    <h2 class="sec-title">名取市で設置するときのポイント</h2>
+    <p class="sec-lead">名取市の気候と土地の特徴を踏まえて、機器と施工をご提案します。</p>
+    <ol>
+      <li><div class="rhombus"><img src="img/panels-blue-sky.webp" alt="晴れた空と太陽光パネル（イメージ）"></div><div><h3>日照と雪</h3><p>太平洋側で冬も晴れる日が比較的多い一方、発電量は屋根の向き・角度・周りの影で変わります。現地調査で確かめます。</p></div></li>
+      <!-- TODO(要確認) 塩害対応の機種選定を実際にしているか（docs/release-solar-natori.md §1 G） -->
+      <li><div class="rhombus"><img src="img/coast-town.webp" alt="海に近い町（イメージ）"></div><div><h3>沿岸部の塩害</h3><p>閖上・下増田・北釜など海に近い地域では、海岸からの距離による機種や保証の条件を確かめて選びます。</p></div></li>
+      <li><div class="rhombus"><img src="img/japanese-roof.webp" alt="住宅の屋根（イメージ）"></div><div><h3>屋根と住宅の状態</h3><p>築年数に応じて、屋根の傷みや防水の状態を確認します。新築の場合は ZEH 関連の制度もあわせて確認します。</p></div></li>
+    </ol>
+  </div>
+</section>
+
+<section class="backup" id="backup">
+  <img src="img/blackout-candle.webp" alt="停電の夜（イメージ）">
+  <div class="wrap">
+    <div class="copy">
+      <h2 class="lead">停電の夜も、<br>いつもの明かりを。</h2>
+      <p class="body">太陽光と蓄電池があれば、昼は発電した電気を、夜はためた電気を使えます。停電のときに電気を送れる範囲は、蓄電池の種類で変わります。</p>
+      <table class="loads">
+        <thead><tr><th></th><th>全負荷型<small>家全体へ送る</small></th><th>特定負荷型<small>決めた回路へ送る</small></th></tr></thead>
+        <tbody>
+          <tr><th>照明</th><td class="y">●</td><td class="y">●</td></tr>
+          <tr><th>冷蔵庫</th><td class="y">●</td><td class="y">●</td></tr>
+          <tr><th>テレビ</th><td class="y">●</td><td class="n">－</td></tr>
+          <tr><th>コンセント</th><td class="y">●</td><td class="n">－</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section class="section reasons" id="reasons">
+  <div class="wrap">
+    <h2 class="sec-title">名取市の株式会社SCに任せる理由</h2>
+    <ol>
+      <li><h3>手倉田に本社</h3><p>現地調査も設置後のご相談も、近くからすぐに伺います。</p></li>
+      <li><h3>毎日21時まで電話受付</h3><p>年中無休、9:00〜21:00。仕事帰りのご相談にも対応します。</p></li>
+      <li><h3>補助金の条件まで一緒に</h3><p>太陽光・蓄電池・補助金の条件を、まとめてご説明します。</p></li>
+    </ol>
+    <p class="address">〒981-1231 宮城県名取市手倉田字諏訪357-2</p>
+  </div>
+</section>
+
+<section class="section faq" id="faq">
+  <div class="wrap">
+    <h2 class="sec-title">よくある質問</h2>
+    <div>
+      <details open><summary>太陽光発電だけでも、名取市の補助金は使えますか？</summary><p>使えません。太陽光発電と定置用蓄電池の同時設置、または既存パネルへの増設と定置用蓄電池の新規設置が条件です。</p></details>
+      <!-- TODO(要確認) 「SII登録機器などの要件」 -->
+      <details><summary>蓄電池だけを後付けしても補助金は使えますか？</summary><p>太陽光発電設備と接続する定置用蓄電池であれば、1件あたり6万円の対象です。SII登録機器などの要件があります。</p></details>
+      <details><summary>補助金は工事の前に申請しますか？</summary><p>名取市は設置後の事後申請です。太陽光と一緒に申請する場合は、電力受給契約確認書が届いてから申請します。</p></details>
+      <details><summary>今から契約しても今年度の補助金に間に合いますか？</summary><p>2026年12月31日までに設置・電力受給開始が必要です。工事と電力会社の手続きの期間によるため、早めにご相談ください。</p></details>
+      <details><summary>宮城県の補助金と一緒に使えますか？</summary><p>公募要領の条件によります。併用の可否も当社へご相談ください。</p></details>
+      <details><summary>海の近く（閖上など）でも設置できますか？</summary><p>海岸からの距離により、機種や保証の条件が異なります。現地調査でご自宅の条件を確認します。</p></details>
+    </div>
+  </div>
+</section>
+
+<section class="contact" id="contact">
+  <div class="wrap">
+    <div>
+      <h2>補助金を使えるか、<br>ご自宅の条件で確かめます。</h2>
+      <p>補助金の対象になるか、期限に間に合うか、見積もりは妥当か。名取市手倉田の株式会社SCがお答えします。</p>
+    </div>
+    <div>
+      <a class="tel-big" href="tel:0223548345">022-354-8345</a>
+      <small>電話 9:00〜21:00 年中無休 ／ フォームは24時間受付</small>
+      <div class="actions"><a class="btn dark" href="#">フォームで相談する</a></div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer><div class="wrap">
+  <img src="../../../../src-next/public/images/solar/sc-logo-white.png" alt="株式会社SC">
+  <span>〒981-1231 宮城県名取市手倉田字諏訪357-2</span>
+  <span>© 株式会社SC</span>
+</div></footer>
+<nav class="mobile-bar" aria-label="ご相談"><a href="tel:0223548345">電話で相談</a><a href="#contact">フォームで相談</a></nav>
+</body>
+</html>
