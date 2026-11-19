@@ -1,10 +1,7 @@
 import type { Metadata } from "next";
-import Script from "next/script";
-import GtmPageView from "@/components/GtmPageView";
+import Gtm from "@/components/Gtm";
 import { SITE_URL } from "@/lib/site";
 import "./globals.css";
-
-const GTM_ID = "GTM-KDJLQXS8";
 
 // canonical は各ページの metadata.alternates.canonical で設定する。
 // layout に置くと、設定し忘れた子ページがすべてトップを canonical にしてしまうため、ここには書かない。
@@ -39,28 +36,10 @@ export default function RootLayout({
         <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;700&display=swap" rel="stylesheet" />
         <link href="https://fonts.googleapis.com/css2?family=Zen+Old+Mincho:wght@400;500;600;700;900&display=swap" rel="stylesheet" />
         <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@200..900&display=swap" rel="stylesheet" />
-        {/* Google Tag Manager */}
-        <Script id="gtm-init" strategy="afterInteractive">
-          {`(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-})(window,document,'script','dataLayer','${GTM_ID}');`}
-        </Script>
-        {/* End Google Tag Manager */}
       </head>
       <body className="antialiased">
-        {/* Google Tag Manager (noscript) */}
-        <noscript>
-          <iframe
-            src={`https://www.googletagmanager.com/ns.html?id=${GTM_ID}`}
-            height="0"
-            width="0"
-            style={{ display: "none", visibility: "hidden" }}
-          />
-        </noscript>
-        {/* End Google Tag Manager (noscript) */}
-        <GtmPageView />
+        {/* Google Tag Manager（/admin/ では読み込まない） */}
+        <Gtm />
         {children}
       </body>
     </html>

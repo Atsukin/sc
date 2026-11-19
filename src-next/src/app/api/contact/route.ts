@@ -63,10 +63,19 @@ export async function POST(request: NextRequest) {
     return json({ error: 'スパム対策の確認に失敗しました。ページを再読み込みしてもう一度お試しください。' }, 400);
   }
 
+  let result;
   try {
-    await processContact({ ...input, submittedAt: new Date() });
+    result = await processContact({ ...input, submittedAt: new Date() });
   } catch (err) {
     console.error('[contact] failed', describeError(err));
+    return json({ error: '送信に失敗しました。時間をおいて再度お試しいただくか、お電話でお問い合わせください。' }, 500);
+  }
+
+  for (const failure of result.failures) {
+    // 保存とメールのどちらかが成功していれば問い合わせは残っている。失敗した側はログで気づけるようにする
+    console.error('[contact] step failed', describeError(failure));
+  }
+  if (!result.saved && !result.mailed) {
     return json({ error: '送信に失敗しました。時間をおいて再度お試しいただくか、お電話でお問い合わせください。' }, 500);
   }
 
