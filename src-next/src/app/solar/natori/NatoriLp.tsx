@@ -52,7 +52,6 @@ export default function NatoriLp({ fontClassName }: { fontClassName: string }) {
         <div className="nav shell">
           <Link className="logo" href="/"><Image className="logo-img" src="/images/solar/sc-logo.png" alt="株式会社SC" width={480} height={206} preload /><span>株式会社SC<small>SOLAR &amp; STORAGE</small></span></Link>
           <nav><a href="#subsidy">補助金</a><a href="#features">選ばれる理由</a><a href="#flow">導入の流れ</a><a href="#faq">よくある質問</a></nav>
-          {/* TODO(要確認) 相談・現地調査が無料か（docs/seo/page-solar-natori.md §4 TODO 3） */}
           <a className="nav-phone" href={COMPANY.telHref} onClick={() => telClick('header')}><small>相談無料</small>022-354-8345</a>
         </div>
       </header>
@@ -65,7 +64,6 @@ export default function NatoriLp({ fontClassName }: { fontClassName: string }) {
             <div className="local-chip">宮城県名取市・地域密着</div>
             <p className="hero-note">補助金の確認から、現地調査・施工まで</p>
             <h1>名取市の<br /><strong>太陽光発電・蓄電池</strong>なら<br />地元の株式会社SCへ</h1>
-            {/* TODO(要確認) 申請書類の支援の範囲（§4 TODO 1） */}
             <p className="hero-copy">名取市の補助金は「太陽光と蓄電池の同時設置」が対象。<br />手倉田の当社が、申請に必要な書類まで丁寧にご案内します。</p>
             <div className="hero-actions"><PhoneButton light ctaLocation="fv" /><FormButton /></div>
           </div>
@@ -80,7 +78,6 @@ export default function NatoriLp({ fontClassName }: { fontClassName: string }) {
           <div className="shell deadline-inner">
             <div className="deadline-date"><span>設置期限</span><strong>2026.12.31</strong></div>
             <div><h2>令和8年度の補助金、今から間に合うかお早めにご相談ください</h2><p>太陽光は電力受給開始まで完了したものが対象です。工事・電力会社の手続き期間を見込む必要があります。</p></div>
-            {/* TODO(要確認) 「無料」（§4 TODO 3） */}
             <a href="#contact">無料で確認する →</a>
           </div>
         </section>
@@ -97,7 +94,7 @@ export default function NatoriLp({ fontClassName }: { fontClassName: string }) {
         <section className="section" id="subsidy">
           <div className="shell narrow">
             <SectionTitle eyebrow="NATORI CITY SUBSIDY" lead="令和8年度 名取市住宅用再生可能エネルギー等設備導入補助金">名取市の補助金をわかりやすく</SectionTitle>
-            <p className="updated">2026年10月9日時点｜先着順・予算に達し次第終了</p>
+            <p className="updated">2026年11月20日時点｜先着順・予算に達し次第終了</p>
             <div className="amount-cards">
               <article><span>太陽光 ＋ 蓄電池</span><p>同時に設置</p><strong><small>1件あたり</small>10<em>万円</em></strong></article>
               <article><span>定置用蓄電池</span><p>太陽光設備と接続</p><strong><small>1件あたり</small>6<em>万円</em></strong></article>
@@ -140,7 +137,6 @@ export default function NatoriLp({ fontClassName }: { fontClassName: string }) {
         </section>
 
         <section className="cta-strip">
-          {/* TODO(要確認) 「専門スタッフ」と言える体制か（§4 TODO 15） */}
           <div className="shell"><div><small>補助金の対象？ 今から間に合う？</small><h2>まずは名取市の専門スタッフへご相談ください</h2></div><PhoneButton light ctaLocation="middle" /><FormButton /></div>
         </section>
 
@@ -160,7 +156,6 @@ export default function NatoriLp({ fontClassName }: { fontClassName: string }) {
             <div>
               <p className="eyebrow">DISASTER PREPAREDNESS</p>
               <h2>停電時も、<br />いつもの暮らしに電気を。</h2>
-              {/* TODO(要確認) 浸水想定を踏まえた設置場所の提案を実際にしているか（§4 TODO 12） */}
               <p>太陽光と蓄電池があれば、昼は発電した電気を、夜はためた電気を使えます。名取市のハザードマップも確認し、浸水想定区域では設置場所を検討します。</p>
             </div>
             <div className="load-cards">
@@ -198,7 +193,6 @@ export default function NatoriLp({ fontClassName }: { fontClassName: string }) {
 
         <section className="contact section" id="contact">
           <div className="shell contact-box">
-            {/* TODO(要確認) 「FREE」「無料」（§4 TODO 3）と「専門スタッフ」（§4 TODO 15） */}
             <p className="eyebrow">FREE CONSULTATION</p>
             <h2>名取市の太陽光発電・蓄電池<br />まずは無料でご相談ください</h2>
             <p>補助金を使えるか、期限に間に合うか、見積もりは妥当か。地域の専門スタッフがお答えします。</p>

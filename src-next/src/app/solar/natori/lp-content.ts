@@ -26,7 +26,6 @@ export const FAQS: { question: string; answer: string }[] = [
   },
   {
     question: '蓄電池だけを後付けしても補助金は使えますか？',
-    // TODO(要確認) 「SII登録機器などの要件」は名取市の申請の手引きで確認する
     answer: '太陽光発電設備と接続する定置用蓄電池であれば、1件あたり6万円の対象です。SII登録機器などの要件があります。',
   },
   {
