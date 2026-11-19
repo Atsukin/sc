@@ -16,6 +16,17 @@ const nextConfig: NextConfig = isStaticExport ? staticExportConfig : {
   trailingSlash: true,
   // 同じ LAN のスマホから dev サーバーで確認できるようにする（next dev のときだけ効く）
   allowedDevOrigins: ["10.*.*.*", "192.168.*.*", "*.local"],
+  async headers() {
+    // 本番ドメイン以外（*.vercel.app など）で開かれたときは検索結果に載せない。
+    // 同じ内容が別ドメインで index されると、sc-14.net の評価が分散するため。
+    return [
+      {
+        source: "/:path*",
+        missing: [{ type: "host", value: "(www\\.)?sc-14\\.net" }],
+        headers: [{ key: "X-Robots-Tag", value: "noindex, nofollow" }],
+      },
+    ];
+  },
   async redirects() {
     // www → apex に正規化する（重複コンテンツの解消）。
     // permanent: true だと 308 になるため、明示的に 301 を返す。
