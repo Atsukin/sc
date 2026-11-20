@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { Noto_Sans_JP, Roboto_Condensed } from 'next/font/google';
+import { Noto_Sans_JP } from 'next/font/google';
 import JsonLd from '@/components/lp/JsonLd';
 import LpViewTracker from '@/components/lp/LpViewTracker';
 import {
@@ -14,19 +14,12 @@ import { BREADCRUMBS, PATH } from './content';
 import { FAQS } from './lp-content';
 import NatoriLp from './NatoriLp';
 
-// LP の書体（元データの Google Fonts の @import を next/font に置き換え）
+// LP の書体。Noto Sans JP の 400〜700 だけを使う（極太の 800・900 は使わない）
 const sans = Noto_Sans_JP({
-  weight: ['400', '500', '600', '700', '800', '900'],
+  weight: ['400', '500', '700'],
   subsets: ['latin'],
   display: 'swap',
   variable: '--nlp-sans',
-});
-
-const condensed = Roboto_Condensed({
-  weight: '700',
-  subsets: ['latin'],
-  display: 'swap',
-  variable: '--nlp-cond',
 });
 
 export const metadata: Metadata = {
@@ -56,7 +49,7 @@ export default function SolarNatoriPage() {
     <>
       <JsonLd data={jsonLd} />
       <LpViewTracker />
-      <NatoriLp fontClassName={`${sans.variable} ${condensed.variable}`} />
+      <NatoriLp fontClassName={sans.variable} />
     </>
   );
 }
