@@ -25,6 +25,11 @@ const nextConfig: NextConfig = isStaticExport ? staticExportConfig : {
         missing: [{ type: "host", value: "(www\\.)?sc-14\\.net" }],
         headers: [{ key: "X-Robots-Tag", value: "noindex, nofollow" }],
       },
+      {
+        // お客さま確認用のデザイン案（public/proposal/）。本番ドメインでも検索に載せない
+        source: "/proposal/:path*",
+        headers: [{ key: "X-Robots-Tag", value: "noindex, nofollow" }],
+      },
     ];
   },
   async redirects() {
